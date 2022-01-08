@@ -73,24 +73,31 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
 
         if (selectedImages.size() == 6) {
-            cleanUpImages(selectedImages);
+            if (cleanUpImages(selectedImages)) {
+                // Go to games page
+            };
         }
     }
 
-    public void cleanUpImages(ArrayList<String> selectedImages) {
+    public boolean cleanUpImages(ArrayList<String> selectedImages) {
         // Remove ImageView IDs that are needed in the next activity
         for (int i = 0; i < selectedImages.size(); i++) {
             FileNameLists.remove(Integer.parseInt(selectedImages.get(i)));
         }
 
-        // Delete images that are not chosen
-        File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        try {
+            // Delete images that are not chosen
+            File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
-        for (Object value : FileNameLists.values()) {
-            File file = new File(dir, value.toString() + ".jpg");
-            if (file.exists()) {
-                file.delete();
+            for (Object value : FileNameLists.values()) {
+                File file = new File(dir, value.toString() + ".jpg");
+                if (file.exists()) {
+                    file.delete();
+                }
             }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
