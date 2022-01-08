@@ -20,12 +20,10 @@ import java.util.HashMap;
 
 public class FetchImage extends AppCompatActivity implements View.OnClickListener {
 
-    private ArrayList<Integer> ImageViewIdList = new ArrayList<Integer>(Arrays.asList(
-            R.id.img1, R.id.img2, R.id.img3, R.id.img4, R.id.img5,
+    private Integer[] ImageViewIdList = { R.id.img1, R.id.img2, R.id.img3, R.id.img4, R.id.img5,
             R.id.img6, R.id.img7, R.id.img8, R.id.img9, R.id.img10,
             R.id.img11, R.id.img12, R.id.img13, R.id.img14, R.id.img15,
-            R.id.img16, R.id.img17, R.id.img18, R.id.img19, R.id.img20
-    ));
+            R.id.img16, R.id.img17, R.id.img18, R.id.img19, R.id.img20 };
 
     private ArrayList<ImageView> ImageViewList = new ArrayList<>(); // contains all imageviews
     private HashMap<Integer, String> FileNameLists = new HashMap<>(); // contains imageview IDs and respective file name
@@ -42,8 +40,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     }
 
     protected void setupImageSelection() {
-        for (int i = 0; i < ImageViewIdList.size(); i++) {
-            ImageView imgView = findViewById(ImageViewIdList.get(i));
+        for (int i = 0; i < ImageViewIdList.length; i++) {
+            ImageView imgView = findViewById(ImageViewIdList[i]);
             imgView.setOnClickListener(this);
             ImageViewList.add(imgView);
         }
