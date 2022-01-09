@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +41,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     private static Context context;
     private String webURL;
     private ArrayList<String> imgURLList = new ArrayList<String>();
-    private int count = 1;
+    private int count;
     // dantong:end
 
 
@@ -49,14 +52,15 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
         // dantong:start
         context = this;
-        setupBtn();
+        setupFetchBtn();
+//        setupProgressBarAndDesc();
         // dantong:end
 
         setupImageSelection(); // set onclick listeners for imageviews
     }
 
     // dantong:start
-    protected void setupBtn(){
+    protected void setupFetchBtn(){
         Button btn = findViewById(R.id.fetchBtn);
         if (btn != null){
             btn.setOnClickListener(new View.OnClickListener() {
@@ -77,31 +81,12 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    count = 1;
                     displayImg();
                 }
             });
         }
     }
-
-//    @Override
-//    public void onClick(View view) {
-//        EditText newURL = findViewById(R.id.urlTextbox);
-//        if (newURL != null) {
-//            webURL = newURL.getText().toString();
-//        }
-//
-//        Thread t1 = new Thread(() -> {
-//            Log.e("hello", "here");
-//            imgURLList = FetchImageHelper.getImageURLList(webURL);
-//        });
-//        t1.start();
-//        try {
-//            t1.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        displayImg();
-//    }
 
     protected void displayImg(){
 
@@ -124,15 +109,27 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                 } catch (NoSuchFieldException e) {
                                     e.printStackTrace();
                                 }
-                                count++;
+
 
                                 ImageView imageView = findViewById(resId);
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
+
+                                ProgressBar progressBar = findViewById(R.id.progressBar);
+                                TextView progressDesc = findViewById(R.id.progressDesc);
+
+                                progressBar.setMax(20);
+                                progressBar.setProgress(count);
+                                progressDesc.setText("Downloading " + String.valueOf(count) + " of 20 images...");
+                                count++;
+
+                                if (count == 21){
+                                    Toast finishDL = Toast.makeText(context, "Downloading finished \nPlease select 6 images...", Toast.LENGTH_SHORT);
+                                    finishDL.show();
+                                }
                             }
                         });
                     }
-
                 }
             }).start();
         }
