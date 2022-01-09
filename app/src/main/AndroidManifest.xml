@@ -3,10 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.team7.matchinggame">
 
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         android:protectionLevel="normal"
         tools:ignore="ProtectedPermissions" />
+
 
     <application
         android:allowBackup="true"
