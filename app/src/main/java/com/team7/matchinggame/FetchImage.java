@@ -56,7 +56,9 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
                     EditText newURL = findViewById(R.id.urlTextbox);
                     if (newURL != null) {
-                        webURL = newURL.getText().toString();
+                        // webURL = newURL.getText().toString();
+                        webURL = newURL.getText().toString().startsWith("https://")
+                                ? newURL.getText().toString() : "https://" + newURL.getText().toString();
                     }
 
                     Thread t1 = new Thread(() -> {
