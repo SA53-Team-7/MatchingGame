@@ -27,6 +27,9 @@
             android:name=".FetchImage"
             android:exported="false" />
         <activity
+            android:name=".HomeActivity"
+            android:label="Home" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

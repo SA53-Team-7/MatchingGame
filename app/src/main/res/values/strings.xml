@@ -10,6 +10,7 @@
     <string name="volumeUp">Up</string>
     <string name="volumeDown">Down</string>
     <string name="home">Home</string>
+    <string name="team7">Team 7</string>
 
     <style name="btnStyle">
         <item name="android:textSize">20sp</item>

@@ -9,13 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Settings extends AppCompatActivity
         implements View.OnClickListener{
-    TextView titleTv;
-    TextView bkgMusicTv;
     Button musicOnBtn;
     Button musicOffBtn;
     Button volumeUpBtn;
@@ -27,8 +26,6 @@ public class Settings extends AppCompatActivity
     protected void onCreate (Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_settings);
-        titleTv = findViewById(R.id.settingsTitle);
-        bkgMusicTv = findViewById(R.id.backgroundMusic);
         musicOnBtn = findViewById(R.id.musicOn);
         musicOffBtn = findViewById(R.id.musicOff);
         volumeUpBtn = findViewById(R.id.volumeUp);
@@ -38,9 +35,11 @@ public class Settings extends AppCompatActivity
         AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         volumeUpBtn.setOnClickListener(v -> {
             audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+            Toast.makeText(this, "Volume up", Toast.LENGTH_SHORT).show();
         });
         volumeDownBtn.setOnClickListener(v -> {
             audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+            Toast.makeText(this, "Volume down", Toast.LENGTH_SHORT).show();
         });
 
         homeBtn = findViewById(R.id.settingHome);
@@ -57,6 +56,7 @@ public class Settings extends AppCompatActivity
                     stopPlayer();
                 }
             });
+            Toast.makeText(this, "Turn on music", Toast.LENGTH_SHORT).show();
         }
 
         player.setLooping(true);
@@ -65,6 +65,7 @@ public class Settings extends AppCompatActivity
 
     public void turnOffMusic(View v) {
         stopPlayer();
+        Toast.makeText(this, "Turn off music", Toast.LENGTH_SHORT).show();
     }
 
     private void stopPlayer() {
@@ -80,7 +81,7 @@ public class Settings extends AppCompatActivity
         int id = view.getId();
 
         if(id == R.id.settingHome) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         }
     }
