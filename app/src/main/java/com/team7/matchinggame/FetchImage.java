@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -18,54 +17,42 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class FetchImage extends AppCompatActivity implements View.OnClickListener {
-
-    private Integer[] ImageViewIdList = { R.id.img1, R.id.img2, R.id.img3, R.id.img4, R.id.img5,
-            R.id.img6, R.id.img7, R.id.img8, R.id.img9, R.id.img10,
-            R.id.img11, R.id.img12, R.id.img13, R.id.img14, R.id.img15,
-            R.id.img16, R.id.img17, R.id.img18, R.id.img19, R.id.img20 };
-
     private ArrayList<ImageView> ImageViewList = new ArrayList<>(); // contains all imageviews
     private HashMap<Integer, String> FileNameLists = new HashMap<>(); // contains imageview IDs and respective file name
     private ArrayList<String> selectedImages = new ArrayList(); // contains imageview IDs of selected cards
-
-    private Button fetchBtn;
-    private EditText url;
-
-    // dantong:start
     private static Context context;
     private String webURL;
     private ArrayList<String> imgURLList = new ArrayList<String>();
     private int count;
-    // dantong:end
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetch_image);
-
-        // dantong:start
         context = this;
+        // removes old images in external folder
+        cleanUpImages(2);
         setupFetchBtn();
-//        setupProgressBarAndDesc();
-        // dantong:end
 
-        setupImageSelection(); // set onclick listeners for imageviews
+        // setupProgressBarAndDesc();
     }
 
-    // dantong:start
     protected void setupFetchBtn(){
         Button btn = findViewById(R.id.fetchBtn);
         if (btn != null){
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // removes old images from previous fetch
+                    cleanUpImages(2);
+
+                    // removes old grid selections from previous selection
+                    resetGrids();
+
                     EditText newURL = findViewById(R.id.urlTextbox);
                     if (newURL != null) {
                         webURL = newURL.getText().toString();
@@ -89,7 +76,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     }
 
     protected void displayImg(){
-
         for(int i = 1; i <= 20; i++){
             final int num = i;
             new Thread(new Runnable() {
@@ -97,6 +83,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                 public void run() {
                     DownloadImageHelper dhelper = new DownloadImageHelper(context);
                     File f = dhelper.downloadImgByURL(imgURLList.get(num-1));
+
                     if (f != null){
                         runOnUiThread(new Runnable() {
                             @Override
@@ -110,7 +97,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                     e.printStackTrace();
                                 }
 
-
+                                FileNameLists.put(resId, f.getName());
                                 ImageView imageView = findViewById(resId);
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
@@ -124,6 +111,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                 count++;
 
                                 if (count == 21){
+                                    // set up onclick listeners for image selection
+                                    setupImageSelection();
                                     Toast finishDL = Toast.makeText(context, "Downloading finished \nPlease select 6 images...", Toast.LENGTH_SHORT);
                                     finishDL.show();
                                 }
@@ -138,22 +127,24 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
 
     protected void setupImageSelection() {
-        for (int i = 0; i < ImageViewIdList.length; i++) {
-            ImageView imgView = findViewById(ImageViewIdList[i]);
-            imgView.setOnClickListener(this);
-            ImageViewList.add(imgView);
+        for (int i = 1; i < 21; i++) {
+            try {
+                int imgViewId = R.id.class.getField("img" + i).getInt(null);
+                ImageView imgView = findViewById(imgViewId);
+                imgView.setOnClickListener(this);
+                ImageViewList.add(imgView);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-
-        if (id == R.id.fetchBtn) {
-
-        }else if (id == R.id.urlTextbox) {
-
-        } else if (FileNameLists.containsKey(id)) {
+        if (FileNameLists.containsKey(id)) {
             selectCard(Integer.toString(id));
         }
     }
@@ -165,35 +156,63 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             iv.setAlpha(1.0f);
         } else {
             selectedImages.add(id);
-            iv.setAlpha(0.5f);
+            iv.setAlpha(0.3f);
         }
 
         if (selectedImages.size() == 6) {
-            if (cleanUpImages(selectedImages)) {
+            if (cleanUpImages(1)) {
                 // Go to games page
+                System.out.println("Go to games page");
             };
         }
     }
 
-    public boolean cleanUpImages(ArrayList<String> selectedImages) {
-        // Remove ImageView IDs that are needed in the next activity
-        for (int i = 0; i < selectedImages.size(); i++) {
-            FileNameLists.remove(Integer.parseInt(selectedImages.get(i)));
+    protected void resetGrids() {
+        selectedImages.clear();
+        for (ImageView i : ImageViewList) {
+            i.setAlpha(1.0f);
         }
+    }
 
-        try {
-            // Delete images that are not chosen
-            File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+    public boolean cleanUpImages(int type) {
+        File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
-            for (Object value : FileNameLists.values()) {
-                File file = new File(dir, value.toString() + ".jpg");
-                if (file.exists()) {
-                    file.delete();
+        switch (type) {
+            case 1:
+                // Remove ImageView IDs that are needed in the next activity
+                for (int i = 0; i < selectedImages.size(); i++) {
+                    FileNameLists.remove(Integer.parseInt(selectedImages.get(i)));
                 }
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
+
+                try {
+                    // Delete images that are not chosen
+                    for (Object value : FileNameLists.values()) {
+                        File file = new File(dir, value.toString());
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
+                    return true;
+                } catch (Exception e) {
+                    return false;
+                }
+            case 2:
+                try {
+                    if (dir.exists()) {
+                        String[] files = dir.list();
+                        for (String file : files) {
+                            File f = new File(dir, file);
+                            if (f.exists()) {
+                                f.delete();
+                            }
+                        }
+                    }
+                    return true;
+                } catch (Exception e) {
+                    return false;
+
+                }
         }
+        return false;
     }
 }
