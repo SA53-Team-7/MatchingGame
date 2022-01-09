@@ -9,7 +9,6 @@
     <string name="volume">Volume</string>
     <string name="volumeUp">Up</string>
     <string name="volumeDown">Down</string>
-    <string name="brightness">Brightness</string>
     <string name="home">Home</string>
 
     <style name="btnStyle">
