@@ -41,7 +41,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     private static Context context;
     private String webURL;
     private ArrayList<String> imgURLList = new ArrayList<String>();
-    private int count = 1;
+    private int count;
     // dantong:end
 
 
@@ -81,6 +81,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    count = 1;
                     displayImg();
                 }
             });
