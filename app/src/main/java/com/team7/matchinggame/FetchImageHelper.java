@@ -17,7 +17,6 @@ import java.util.UUID;
 public class FetchImageHelper {
     protected static ArrayList<String> getImageURLList(String newURLStr){
         try{
-            // temporary hardcode
             URL htmlURL = new URL(newURLStr);
             URLConnection conn = htmlURL.openConnection();
             InputStream in = conn.getInputStream();
