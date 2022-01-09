@@ -3,6 +3,7 @@ package com.team7.matchinggame;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -163,6 +164,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             if (cleanUpImages(1)) {
                 // Go to games page
                 System.out.println("Go to games page");
+                // Intent intent = new Intent(this, );
+                // startActivity(intent);
             };
         }
     }
