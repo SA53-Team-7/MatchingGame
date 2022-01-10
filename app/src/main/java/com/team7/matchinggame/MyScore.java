@@ -33,6 +33,10 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         //Get time taken from Game activity
         //timeElapsed = getIntent().getLongExtra("timeElapsed", 0);
 
+        //Get input name
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+
         //Set time taken as my Scores
         TextView textView = findViewById(R.id.myScore);
         textView.setText("1.30");

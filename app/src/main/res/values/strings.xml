@@ -22,6 +22,8 @@
     <string name="name1">Name1</string>
     <string name="wellDone">Well Done</string>
     <string name="next">NEXT</string>
+    <string name="enterName">Enter Your Name Here</string>
+    <string name="ok">OK</string>
 
 
     <style name="btnStyle">

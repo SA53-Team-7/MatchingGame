@@ -32,7 +32,7 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener{
         int id = view.getId();
 
         if (id == R.id.next) {
-            Intent intent = new Intent(this, MyScore.class);
+            Intent intent = new Intent(this, EnterName.class);
             startActivity(intent);
         }
     }
