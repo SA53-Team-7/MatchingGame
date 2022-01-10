@@ -20,6 +20,8 @@
     <string name="score1">Score1</string>
     <string name="newGame">New Game</string>
     <string name="name1">Name1</string>
+    <string name="wellDone">Well Done</string>
+    <string name="next">NEXT</string>
 
 
     <style name="btnStyle">
