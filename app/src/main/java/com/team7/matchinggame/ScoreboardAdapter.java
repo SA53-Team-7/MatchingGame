@@ -38,7 +38,7 @@ public class ScoreboardAdapter extends ArrayAdapter<Object> {
 
         // set the text for number in TextView
         TextView num = view.findViewById(R.id.number);
-        num.setText(number[pos]);
+        num.setText(Integer.toString(number[pos]));
 
         // set the text for name in TextView
         TextView name = view.findViewById(R.id.name);
