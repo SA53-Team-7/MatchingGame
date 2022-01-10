@@ -15,6 +15,8 @@ import java.util.Random;
 import java.util.UUID;
 
 public class FetchImageHelper {
+    private static final String[] suffix = new String[]{".jpg", ".png", ".jpeg"};
+
     protected static ArrayList<String> getImageURLList(String newURLStr){
         try{
             URL htmlURL = new URL(newURLStr);
@@ -28,21 +30,21 @@ public class FetchImageHelper {
             String line;
 
             while((line = reader.readLine()) != null){
-                if (line.startsWith("<img data-cfsrc=")){
-                    if (line.contains("img src=\"https://")){
-                        line = grabImg(line);
-                        imgURLList.add(line);
-                        if (imgURLList.size() > 34){
-                            break;
+                if (line.contains("img src=\"https://"))
+                    for (String s: suffix)
+                        if (line.contains(s)) {
+                            Log.e("URL", line);
+                            line = grabImg(line);
+                            imgURLList.add(line);
+                            // if images number = 35, stop grab
+                            if (imgURLList.size() > 34) {
+                                break;
+                            }
                         }
-                    }
-                }
             }
 
             in.close();
-            Log.e("list size", String.valueOf(imgURLList.size()));
             imgURLList = ramdomSelect20Img(imgURLList);
-            Log.e("list size", String.valueOf(imgURLList.size()));
             return imgURLList;
         }
         catch (Exception e){
@@ -52,11 +54,17 @@ public class FetchImageHelper {
     }
 
     protected static String grabImg(String line){
-        int startIdx, endIdx;
+        int startIdx;
         String findStart = "img src=";
-        String findEnd = ".jpg";
         startIdx = line.indexOf(findStart) + findStart.length() + 1;
-        endIdx = line.lastIndexOf(".jpg") + findEnd.length();
+
+        // only support 3 kinds of image types
+        int endIdx = 0;
+        for (String s: suffix){
+            if (line.contains(s)) {
+                endIdx = line.lastIndexOf(s) + s.length();
+            }
+        }
 
         String imgURL = line.substring(startIdx, endIdx);
 
@@ -68,21 +76,25 @@ public class FetchImageHelper {
         ArrayList<Integer> randomNums = new ArrayList<Integer>(){};
         ArrayList<String> randomImgs = new ArrayList<String>(){};
         int num;
-        int fromWebImgNum = 35 - 1;
+        int allURLsize = allImgURL.size();
         int targetImgNum = 20;
-        while (randomNums.size() != targetImgNum){
-            num = r.nextInt(fromWebImgNum);
-            Log.e("num", String.valueOf(num));
-            if (!randomNums.contains(num)){
-                randomNums.add(num);
+        // if image URL list >= 20, randomly select 20 images
+        if (allURLsize > targetImgNum){
+            while (randomNums.size() != targetImgNum){
+                num = r.nextInt(allURLsize);
+                if (!randomNums.contains(num)){
+                    randomNums.add(num);
+                }
+            }
+            for (Integer i: randomNums) {
+                randomImgs.add(allImgURL.get(i));
             }
         }
-        Log.e("nums", String.valueOf(randomNums));
-        for (Integer i: randomNums) {
-            randomImgs.add(allImgURL.get(i));
-        }
-        Log.e("list size", String.valueOf(randomImgs.size()));
+        // if image URL list < 20, also sent to activity
+        else
+            randomImgs = allImgURL;
+        Log.e("number of list after randomly", String
+                .valueOf(randomImgs.size()));
         return randomImgs;
     }
 }
-

@@ -1,8 +1,11 @@
 package com.team7.matchinggame;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,8 +41,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         // removes old images in external folder
         cleanUpImages(2);
         setupFetchBtn();
-
-        // setupProgressBarAndDesc();
     }
 
     protected void setupFetchBtn(){
@@ -72,9 +73,35 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                         e.printStackTrace();
                     }
                     count = 1;
+//                    checkImageNum();
+
+                    for (String url:imgURLList){
+                        Log.e("url", url);
+                    }
                     displayImg();
                 }
             });
+        }
+    }
+
+    protected void checkImageNum(){
+        if (imgURLList.size() < 20 || imgURLList == null){
+            String title = "Notice";
+            String msg = "Sorry, not enough images in the URL";
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle(title)
+                    .setMessage(msg)
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    Log.e("come out", "yes, come");
+                                }
+                            });
+//            AlertDialog alertDialog = builder.create();
+            builder.create().show();
         }
     }
 
