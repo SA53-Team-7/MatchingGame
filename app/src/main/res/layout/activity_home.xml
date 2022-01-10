@@ -49,5 +49,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/highestScores"
+        style="@style/btnStyle"
+        android:layout_width="160dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="308dp"
+        android:background="#99e3e3"
+        android:text="@string/highestScores"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.70"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

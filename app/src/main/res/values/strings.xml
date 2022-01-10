@@ -3,6 +3,7 @@
     <string name="title">Matching Game</string>
     <string name="startGame">Start Game</string>
     <string name="settings">Settings</string>
+    <string name="highestScores">Highest Scores</string>
     <string name="backgroundMusic">Background Music</string>
     <string name="musicOn">ON</string>
     <string name="musicOff">OFF</string>
