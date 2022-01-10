@@ -71,52 +71,73 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    count = 1;
+
+                    deletePreviousImage();
                     displayImg();
                 }
             });
         }
     }
 
+    // if fetch again, delete the stored image
+    protected void deletePreviousImage() {
+        File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        for (String file : FileNameLists.values()) {
+            File f = new File(dir, file);
+            if (f.exists()) {
+                f.delete();
+            }
+        }
+    }
+
+
     protected void displayImg(){
-        for(int i = 1; i <= 20; i++){
+        count = 1;
+        for(int i = 1; i <= imgURLList.size(); i++){
+            Log.e("i", String.valueOf(i));
             final int num = i;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     DownloadImageHelper dhelper = new DownloadImageHelper(context);
                     File f = dhelper.downloadImgByURL(imgURLList.get(num-1));
-
                     if (f != null){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
+                                Log.e("count value", String.valueOf(count));
+                                Log.e("num value", String.valueOf(num));
                                 int resId = 0;
                                 try {
-                                    resId = R.id.class.getField("img" + count).getInt(null);
+                                    resId = R.id.class.getField("img" + String.valueOf(count)).getInt(null);
                                 } catch (IllegalAccessException e) {
                                     e.printStackTrace();
                                 } catch (NoSuchFieldException e) {
                                     e.printStackTrace();
                                 }
 
+                                // load all images
                                 FileNameLists.put(resId, f.getName());
                                 ImageView imageView = findViewById(resId);
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
 
+                                // progress bar and text view
                                 ProgressBar progressBar = findViewById(R.id.progressBar);
                                 TextView progressDesc = findViewById(R.id.progressDesc);
 
-                                progressBar.setMax(20);
+                                progressBar.setMax(imgURLList.size());
                                 progressBar.setProgress(count);
-                                progressDesc.setText("Downloading " + String.valueOf(count) + " of 20 images...");
+                                progressDesc.setText("Downloading " + String.valueOf(count) + " of " + String.valueOf(imgURLList.size()) + " images...");
                                 count++;
 
-                                if (count == 21){
+                                // downloading finished, toast text
+                                if (count == (imgURLList.size()+1)){
                                     // set up onclick listeners for image selection
                                     setupImageSelection();
-                                    Toast finishDL = Toast.makeText(context, "Downloading finished \nPlease select 6 images...", Toast.LENGTH_SHORT);
+                                    progressDesc.setText("Please select 6 images...");
+                                    Toast finishDL = Toast.makeText(context, "Downloading finished!", Toast.LENGTH_LONG);
                                     finishDL.show();
                                 }
                             }
@@ -126,7 +147,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             }).start();
         }
     }
-    // dantong:end
 
 
     protected void setupImageSelection() {
@@ -144,6 +164,12 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    protected void disableSelection() {
+        for (ImageView imgview : ImageViewList) {
+            imgview.setOnClickListener(null);
+        }
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -152,7 +178,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void selectCard(String id) {
+    protected void selectCard(String id) {
         ImageView iv = findViewById(Integer.parseInt(id));
         if (selectedImages.contains(id)) {
             selectedImages.remove(id);
@@ -163,6 +189,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
 
         if (selectedImages.size() == 6) {
+            disableSelection();
             if (cleanUpImages(1)) {
                 // Go to games page
                 System.out.println("Go to games page");
@@ -179,7 +206,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public boolean cleanUpImages(int type) {
+    protected boolean cleanUpImages(int type) {
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
         switch (type) {
