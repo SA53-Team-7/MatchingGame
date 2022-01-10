@@ -144,6 +144,12 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    protected void disableSelection() {
+        for (ImageView imgview : ImageViewList) {
+            imgview.setOnClickListener(null);
+        }
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -163,6 +169,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
 
         if (selectedImages.size() == 6) {
+            disableSelection();
             if (cleanUpImages(1)) {
                 // Go to games page
                 System.out.println("Go to games page");
