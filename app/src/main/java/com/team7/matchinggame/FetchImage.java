@@ -208,6 +208,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             iv.setAlpha(0.3f);
         }
 
+        progressDesc = findViewById(R.id.progressDesc);
         progressDesc.setText(selectedImages.size() + " of 6 images selected");
 
         if (selectedImages.size() == 6) {
