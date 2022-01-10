@@ -193,8 +193,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             if (cleanUpImages(1)) {
                 // Go to games page
                 System.out.println("Go to games page");
-                // Intent intent = new Intent(this, );
-                // startActivity(intent);
+                Intent intent = new Intent(this, Game.class);
+                startActivity(intent);
             };
         }
     }
