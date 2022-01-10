@@ -1,10 +1,13 @@
 package com.team7.matchinggame;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -22,6 +25,36 @@ public class Settings extends AppCompatActivity
     Button homeBtn;
     MediaPlayer player;
 
+    //bind Settings to MusicService
+    private boolean mIsBound = false;
+    private MusicService musicService;
+    private ServiceConnection sConnection =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            musicService =  ((MusicService.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            musicService = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                sConnection,Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(sConnection);
+            mIsBound = false;
+        }
+    }
+
     @Override
     protected void onCreate (Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -31,6 +64,7 @@ public class Settings extends AppCompatActivity
         volumeUpBtn = findViewById(R.id.volumeUp);
         volumeDownBtn = findViewById(R.id.volumeDown);
 
+        doBindService();
 
         AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         volumeUpBtn.setOnClickListener(v -> {
@@ -48,24 +82,17 @@ public class Settings extends AppCompatActivity
     }
 
     public void turnOnMusic(View v) {
-        if (player == null) {
-            player = MediaPlayer.create(this, R.raw.main_music);
-            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    stopPlayer();
-                }
-            });
+        if (musicService != null){
+            musicService.resumeMusic();
             Toast.makeText(this, "Turn on music", Toast.LENGTH_SHORT).show();
         }
-
-        player.setLooping(true);
-        player.start();
     }
 
     public void turnOffMusic(View v) {
-        stopPlayer();
-        Toast.makeText(this, "Turn off music", Toast.LENGTH_SHORT).show();
+        if (musicService != null){
+            musicService.pauseMusic();
+            Toast.makeText(this, "Turn off music", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void stopPlayer() {
@@ -75,6 +102,10 @@ public class Settings extends AppCompatActivity
         }
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+        doUnbindService();
+    }
 
     @Override
     public void onClick(View view) {

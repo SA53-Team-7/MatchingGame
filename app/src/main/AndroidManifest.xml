@@ -3,14 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.team7.matchinggame">
 
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         android:protectionLevel="normal"
         tools:ignore="ProtectedPermissions" />
-
 
     <application
         android:allowBackup="true"
@@ -19,6 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MatchingGame">
+        <service
+            android:name=".MusicService"
+            android:enabled="true"
+            android:exported="true"></service>
         <activity
             android:name=".Settings"
             android:label="Settings"
