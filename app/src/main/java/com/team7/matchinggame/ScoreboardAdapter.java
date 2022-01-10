@@ -31,9 +31,6 @@ public class ScoreboardAdapter extends ArrayAdapter {
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                     Activity.LAYOUT_INFLATER_SERVICE);
-
-            // if we are not responsible for adding the view to the parent,
-            // then attachToRoot should be 'false' (which is in our case)
             view = inflater.inflate(R.layout.scoreboard_row, parent, false);
         }
 

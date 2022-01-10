@@ -14,7 +14,7 @@ public class Scoreboard extends AppCompatActivity {
     String second = Long.toString(pref.getLong("timing2nd",0));
     String third = Long.toString(pref.getLong("timing3rd",0));
     String fourth = Long.toString(pref.getLong("timing4th",0));
-    String fifth = Long.toString(pref.getLong("timing5th",0));
+    String fifth = Long.toString(pref.getLong("timing5th",0)); 
     private final Integer[] number = {1,2,3,4,5,};
     private final String[] timings = {first, second, third, fourth, fifth};
 
