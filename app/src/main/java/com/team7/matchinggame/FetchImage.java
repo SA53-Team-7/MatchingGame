@@ -145,6 +145,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
                                 // progress bar and text view
                                 ProgressBar progressBar = findViewById(R.id.progressBar);
+                                TextView progressDesc = findViewById(R.id.progressDesc);
 
                                 progressBar.setMax(imgURLList.size());
                                 progressBar.setProgress(count);
