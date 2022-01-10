@@ -128,7 +128,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     }
     // dantong:end
 
-
     protected void setupImageSelection() {
         for (int i = 1; i < 21; i++) {
             try {
@@ -144,6 +143,12 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    protected void disableSelection() {
+        for (ImageView imgview : ImageViewList) {
+            imgview.setOnClickListener(null);
+        }
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -152,7 +157,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void selectCard(String id) {
+    protected void selectCard(String id) {
         ImageView iv = findViewById(Integer.parseInt(id));
         if (selectedImages.contains(id)) {
             selectedImages.remove(id);
@@ -163,6 +168,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
 
         if (selectedImages.size() == 6) {
+            disableSelection();
             if (cleanUpImages(1)) {
                 // Go to games page
                 System.out.println("Go to games page");
@@ -179,7 +185,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public boolean cleanUpImages(int type) {
+    protected boolean cleanUpImages(int type) {
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
         switch (type) {

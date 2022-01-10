@@ -21,6 +21,9 @@
             android:enabled="true"
             android:exported="true"></service>
         <activity
+            android:name=".Game"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
             android:label="Settings"
             android:parentActivityName=".MainActivity">
