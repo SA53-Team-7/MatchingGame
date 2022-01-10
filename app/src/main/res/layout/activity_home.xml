@@ -11,27 +11,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/startGame"
         app:layout_constraintHeight_percent="0.30"
-        app:layout_constraintHorizontal_bias="0.532"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.769" />
+        app:layout_constraintVertical_bias="0.70" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startGame"
         style="@style/btnStyle"
         android:layout_width="160dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="440dp"
+        android:layout_marginBottom="420dp"
         android:background="#99e3e3"
         android:text="@string/startGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.70"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -40,12 +40,12 @@
         style="@style/btnStyle"
         android:layout_width="160dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="352dp"
+        android:layout_marginBottom="330dp"
         android:background="#99e3e3"
         android:text="@string/settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.70"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -54,12 +54,12 @@
         style="@style/btnStyle"
         android:layout_width="160dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="260dp"
+        android:layout_marginBottom="240dp"
         android:background="#99e3e3"
         android:text="@string/highestScores"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.70"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

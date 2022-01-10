@@ -30,18 +30,18 @@ public class FetchImageHelper {
             String line;
 
             while((line = reader.readLine()) != null){
-                if (line.startsWith("<img data-cfsrc=")){
-                    if (line.contains("img src="))
-                        for (String s: suffix)
-                            if (line.contains(s)) {
-                                line = grabImg(line);
-                                imgURLList.add(line);
-                                // if images number = 35, stop grab
-                                if (imgURLList.size() > 34) {
-                                    break;
-                                }
+
+                if (line.contains("img src=\"https://"))
+                    for (String s: suffix)
+                        if (line.contains(s)) {
+                            Log.e("URL", line);
+                            line = grabImg(line);
+                            imgURLList.add(line);
+                            // if images number = 35, stop grab
+                            if (imgURLList.size() > 34) {
+                                break;
                             }
-                }
+                        }
             }
 
             in.close();
