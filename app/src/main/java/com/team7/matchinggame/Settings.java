@@ -95,13 +95,6 @@ public class Settings extends AppCompatActivity
         }
     }
 
-    private void stopPlayer() {
-        if (player != null) {
-            player.release();
-            player = null;
-        }
-    }
-
     public void onDestroy(){
         super.onDestroy();
         doUnbindService();
