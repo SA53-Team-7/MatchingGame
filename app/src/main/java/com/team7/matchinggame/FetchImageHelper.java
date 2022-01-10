@@ -30,6 +30,7 @@ public class FetchImageHelper {
             String line;
 
             while((line = reader.readLine()) != null){
+
                 if (line.contains("img src=\"https://"))
                     for (String s: suffix)
                         if (line.contains(s)) {

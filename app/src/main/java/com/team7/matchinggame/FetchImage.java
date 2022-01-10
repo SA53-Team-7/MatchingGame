@@ -32,6 +32,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     private String webURL;
     private ArrayList<String> imgURLList = new ArrayList<String>();
     private int count;
+    private TextView progressDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,10 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         context = this;
         // removes old images in external folder
         cleanUpImages(2);
+
+        // set up fetch button
         setupFetchBtn();
+
     }
 
     protected void setupFetchBtn(){
@@ -72,17 +76,16 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     count = 1;
 //                    checkImageNum();
 
-                    for (String url:imgURLList){
-                        Log.e("url", url);
-                    }
                     displayImg();
                 }
             });
         }
     }
+
 
     protected void checkImageNum(){
         if (imgURLList.size() < 20 || imgURLList == null){
@@ -102,48 +105,56 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                             });
 //            AlertDialog alertDialog = builder.create();
             builder.create().show();
-        }
-    }
+
 
     protected void displayImg(){
-        for(int i = 1; i <= 20; i++){
+        count = 1;
+        for(int i = 1; i <= imgURLList.size(); i++){
+            Log.e("i", String.valueOf(i));
             final int num = i;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     DownloadImageHelper dhelper = new DownloadImageHelper(context);
                     File f = dhelper.downloadImgByURL(imgURLList.get(num-1));
-
                     if (f != null){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
+                                Log.e("count value", String.valueOf(count));
+                                Log.e("num value", String.valueOf(num));
                                 int resId = 0;
                                 try {
-                                    resId = R.id.class.getField("img" + count).getInt(null);
+                                    resId = R.id.class.getField("img" + String.valueOf(count)).getInt(null);
                                 } catch (IllegalAccessException e) {
                                     e.printStackTrace();
                                 } catch (NoSuchFieldException e) {
                                     e.printStackTrace();
                                 }
 
+                                // Store ImageView ID and associated image with it
                                 FileNameLists.put(resId, f.getName());
+
+                                // load all images
                                 ImageView imageView = findViewById(resId);
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
 
+                                // progress bar and text view
                                 ProgressBar progressBar = findViewById(R.id.progressBar);
-                                TextView progressDesc = findViewById(R.id.progressDesc);
 
-                                progressBar.setMax(20);
+                                progressBar.setMax(imgURLList.size());
                                 progressBar.setProgress(count);
-                                progressDesc.setText("Downloading " + String.valueOf(count) + " of 20 images...");
+                                progressDesc.setText("Downloading " + String.valueOf(count) + " of " + String.valueOf(imgURLList.size()) + " images...");
                                 count++;
 
-                                if (count == 21){
+                                // downloading finished, toast text
+                                if (count == (imgURLList.size()+1)){
                                     // set up onclick listeners for image selection
                                     setupImageSelection();
-                                    Toast finishDL = Toast.makeText(context, "Downloading finished \nPlease select 6 images...", Toast.LENGTH_SHORT);
+                                    progressDesc.setText("Please select 6 images...");
+                                    Toast finishDL = Toast.makeText(context, "Downloading finished!", Toast.LENGTH_LONG);
                                     finishDL.show();
                                 }
                             }
@@ -153,7 +164,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             }).start();
         }
     }
-    // dantong:end
+
 
     protected void setupImageSelection() {
         for (int i = 1; i < 21; i++) {
@@ -194,13 +205,14 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             iv.setAlpha(0.3f);
         }
 
+        progressDesc.setText(selectedImages.size() + " of 6 images selected");
+
         if (selectedImages.size() == 6) {
             disableSelection();
             if (cleanUpImages(1)) {
                 // Go to games page
-                System.out.println("Go to games page");
-                // Intent intent = new Intent(this, );
-                // startActivity(intent);
+                Intent intent = new Intent(this, Game.class);
+                startActivity(intent);
             };
         }
     }

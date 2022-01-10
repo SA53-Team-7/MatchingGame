@@ -47,7 +47,6 @@ public class DownloadImageHelper {
         String destFilename = UUID.randomUUID().toString() + ".jpg";
         File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File destFile = new File(dir, destFilename);
-        Log.e("file", String.valueOf(destFile.exists()));
         return destFile;
     }
 }
