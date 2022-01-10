@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MatchingGame">
         <activity
+            android:name=".Game"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
             android:label="Settings"
             android:parentActivityName=".MainActivity">
