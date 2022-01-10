@@ -3,13 +3,16 @@ package com.team7.matchinggame;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
-public class Scoreboard extends AppCompatActivity {
+public class Scoreboard extends AppCompatActivity implements View.OnClickListener{
 
     SharedPreferences sharedPref = getSharedPreferences("scores", Context.MODE_PRIVATE);
     long timeElapsed; //in ms
@@ -38,17 +41,19 @@ public class Scoreboard extends AppCompatActivity {
             listView.setAdapter(new ScoreboardAdapter(this, number,names, timings));
         }
 
+        Button btn = findViewById(R.id.btnHome);
+        if(btn!=null){
+            btn.setOnClickListener(this);
+        }
     }
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-
-
-
-
-
-
-
-
-
-
+        if (id == R.id.btnHome) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        }
+    }
 }

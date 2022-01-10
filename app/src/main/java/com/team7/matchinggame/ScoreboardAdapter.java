@@ -42,7 +42,7 @@ public class ScoreboardAdapter extends ArrayAdapter<Object> {
 
         // set the text for name in TextView
         TextView name = view.findViewById(R.id.name);
-        name.setText(number[pos]);
+        name.setText(names[pos]);
 
         // set the text for timings in TextView
         TextView time = view.findViewById(R.id.time);
