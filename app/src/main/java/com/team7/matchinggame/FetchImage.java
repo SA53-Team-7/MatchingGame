@@ -29,6 +29,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     private String webURL;
     private ArrayList<String> imgURLList = new ArrayList<String>();
     private int count;
+    private TextView progressDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,10 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         context = this;
         // removes old images in external folder
         cleanUpImages(2);
+
+        // set up fetch button
         setupFetchBtn();
+        progressDesc = findViewById(R.id.progressDesc);
 
         // setupProgressBarAndDesc();
     }
@@ -72,6 +76,10 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                         e.printStackTrace();
                     }
 
+                    for (String s : imgURLList) {
+                        System.out.println(s);
+                    }
+
                     deletePreviousImage();
                     displayImg();
                 }
@@ -89,7 +97,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             }
         }
     }
-
 
     protected void displayImg(){
         count = 1;
@@ -117,15 +124,16 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                     e.printStackTrace();
                                 }
 
-                                // load all images
+                                // Store ImageView ID and associated image with it
                                 FileNameLists.put(resId, f.getName());
+
+                                // load all images
                                 ImageView imageView = findViewById(resId);
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
 
                                 // progress bar and text view
                                 ProgressBar progressBar = findViewById(R.id.progressBar);
-                                TextView progressDesc = findViewById(R.id.progressDesc);
 
                                 progressBar.setMax(imgURLList.size());
                                 progressBar.setProgress(count);
@@ -188,11 +196,12 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             iv.setAlpha(0.3f);
         }
 
+        progressDesc.setText(selectedImages.size() + " of 6 images selected");
+
         if (selectedImages.size() == 6) {
             disableSelection();
             if (cleanUpImages(1)) {
                 // Go to games page
-                System.out.println("Go to games page");
                 Intent intent = new Intent(this, Game.class);
                 startActivity(intent);
             };
