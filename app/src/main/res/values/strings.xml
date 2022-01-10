@@ -17,6 +17,8 @@
     <string name="scoreboard">Scoreboard</string>
     <string name="top1">1</string>
     <string name="score1">Score1</string>
+    <string name="newGame">New Game</string>
+    <string name="name1">Name1</string>
 
 
     <style name="btnStyle">

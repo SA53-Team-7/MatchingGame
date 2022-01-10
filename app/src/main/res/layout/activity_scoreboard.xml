@@ -10,6 +10,7 @@
         android:padding="20dp"
         android:textSize="40sp"
         android:text="@string/top5"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
@@ -19,6 +20,17 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHome"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:layout_gravity="center"
+        android:background="#abcdef"
+        android:textSize="15sp"
+        android:textAllCaps="false"
+        android:text="@string/newGame" />
 
 </LinearLayout>
 

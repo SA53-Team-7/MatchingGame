@@ -11,16 +11,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-public class ScoreboardAdapter extends ArrayAdapter {
+public class ScoreboardAdapter extends ArrayAdapter<Object> {
     private final Context context;
 
     protected Integer[] number;
+    protected String[] names;
     protected String[] timings;
 
-    public ScoreboardAdapter(Context context, Integer[] number, String[] timings) {
+    public ScoreboardAdapter(Context context, Integer[] number, String[] names, String[] timings) {
         super(context, R.layout.scoreboard_row);
         this.context = context;
         this.number = number;
+        this.names = names;
         this.timings = timings;
 
         addAll(new Object[number.length]);
@@ -37,6 +39,10 @@ public class ScoreboardAdapter extends ArrayAdapter {
         // set the text for number in TextView
         TextView num = view.findViewById(R.id.number);
         num.setText(number[pos]);
+
+        // set the text for name in TextView
+        TextView name = view.findViewById(R.id.name);
+        name.setText(number[pos]);
 
         // set the text for timings in TextView
         TextView time = view.findViewById(R.id.time);
