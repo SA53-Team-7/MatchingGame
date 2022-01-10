@@ -87,8 +87,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    protected void checkImageNum(){
-        if (imgURLList.size() < 20 || imgURLList == null){
+    protected void checkImageNum() {
+        if (imgURLList.size() < 20 || imgURLList == null) {
             String title = "Notice";
             String msg = "Sorry, not enough images in the URL";
 
@@ -105,6 +105,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                             });
 //            AlertDialog alertDialog = builder.create();
             builder.create().show();
+        }
+    }
 
 
     protected void displayImg(){
