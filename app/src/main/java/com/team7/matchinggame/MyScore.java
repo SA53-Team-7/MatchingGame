@@ -24,6 +24,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_score);
         setupBtns();
+        // For testing purpose only -> for real game uncomment the initScores()
         initScores();
 
 
@@ -58,7 +59,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             e.printStackTrace();
         }
         //Update scoreboard if top 5
-        if (myTime.before(time5)) {
+        if (myTime.before(time5) || time5th =="0") {
 
             updateScore(time5, myTime, name, time);
         }
@@ -141,7 +142,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
 
         //>1st become 1st and push the scoreboard downward
-        if (myTime.before(time1)) {
+        if (myTime.before(time1)|| time1st=="0" ) {
 
             editor.putString("name2nd", name1st);
             editor.putString("time2nd", time1st);
@@ -157,7 +158,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
         }
         //>2nd become 2nd and push the scoreboard downward
-        else if (myTime.before(time2)) {
+        else if (myTime.before(time2)||time2nd=="0") {
 
             editor.putString("name3rd", name2nd);
             editor.putString("time3rd", time2nd);
@@ -171,7 +172,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         }
 
         //>3rd become 3rd and push the scoreboard downward
-        else if (myTime.before(time3)) {
+        else if (myTime.before(time3)||time3rd=="0") {
             editor.putString("name4th", name3rd);
             editor.putString("time4th", time3rd);
             editor.putString("name5th", name4th);
@@ -181,7 +182,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             editor.putString("time3rd", time);
         }
 
-        else if (myTime.before(time4)) {
+        else if (myTime.before(time4)||time4th=="0") {
             editor.putString("name5th", name4th);
             editor.putString("time5th", time4th);
 
