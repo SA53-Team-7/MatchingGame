@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -128,6 +129,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				gridStatus[getGridNumber(previousGrid)] = 2;
 				previousGrid.setAlpha(0.3f);
 				view.setAlpha(0.3f);
+				MediaPlayer matched = MediaPlayer.create(Game.this, R.raw.match);
+				matched.start();
 			}
 			else {
 				isbusy = true;

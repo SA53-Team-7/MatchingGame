@@ -23,7 +23,7 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener{
             btn.setOnClickListener(this);
         }
 
-        MediaPlayer clap = MediaPlayer.create(EndGame.this, R.raw.clap);
+        MediaPlayer clap = MediaPlayer.create(EndGame.this, R.raw.victory);
         clap.start();
 
     }
