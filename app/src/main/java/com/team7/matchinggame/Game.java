@@ -102,7 +102,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 			try {
 				int imgViewId = R.id.class.getField("img" + i).getInt(null);
 				ImageView imgView = findViewById(imgViewId);
-				imgView.setImageResource(R.drawable.placeholder);
+				imgView.setImageResource(R.drawable.question_mark);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			} catch (NoSuchFieldException e) {
@@ -181,7 +181,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
     	//Integer grid = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
 		ImageView imageView = findViewById(view.getId());
     	if (gridStatus[grid] == 1) {
-			imageView.setImageResource(R.drawable.placeholder);
+			imageView.setImageResource(R.drawable.question_mark);
 			gridStatus[grid] = 0;
 
 		} else if (gridStatus[grid] == 0) {
