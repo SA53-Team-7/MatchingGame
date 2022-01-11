@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
-    long timeElapsed; //in ms
+    // (Eric's part not sure what is wrong)
+    /*long timeElapsed; //in ms
     String name = "Lisa";
     SharedPreferences sharedPref = getSharedPreferences("scores", Context.MODE_PRIVATE);
     long time1st = sharedPref.getLong("time1st", 0);
@@ -21,7 +24,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
     long time4th = sharedPref.getLong("time4th", 0);
     long time5th = sharedPref.getLong("time5th", 0);
     int minutes;
-    int seconds;
+    int seconds;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +33,27 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         setupBtns();
 
         //Get time taken from Game activity
-        timeElapsed = getIntent().getLongExtra("timeElapsed", 0);
+        Integer timeElapsed = getIntent().getIntExtra("timeElapsed", 0);
+
+        //Get input name
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        TextView scoreName = findViewById(R.id.myName);
+        scoreName.setText(name);
 
         //Set time taken as my Scores
         TextView textView = findViewById(R.id.myScore);
-        textView.setText(Long.toString(timeElapsed));
+        int hours = timeElapsed / 3600;
+        int minutes = (timeElapsed % 3600) / 60;
+        int secs = timeElapsed % 60;
+        String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
+        textView.setText(time);
 
+        // (Eric's part not sure what is wrong)
         //Update scoreboard if top 5
-        if (timeElapsed < time5th || (time5th == 0)) {
+        /*if (timeElapsed < time5th || (time5th == 0)) {
             updateScore();
-        }
+        }*/
     }
 
     protected void setupBtns() {
@@ -66,7 +80,9 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             startActivity(intent);
         }
     }
-    public void updateScore() {
+
+    // (Eric's part not sure what is wrong)
+    /*public void updateScore() {
         Context context = getApplicationContext();
         sharedPref = context.getSharedPreferences("scores",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -127,6 +143,6 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         editor.commit();
 
 
-    }
+    }*/
 
 }

@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MatchingGame">
         <activity
+            android:name=".EnterName"
+            android:exported="false" />
+        <activity
+            android:name=".EndGame"
+            android:exported="false" />
+        <activity
             android:name=".MyScore"
             android:exported="false" />
         <activity

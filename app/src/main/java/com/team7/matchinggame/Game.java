@@ -2,23 +2,35 @@ package com.team7.matchinggame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Game extends AppCompatActivity implements View.OnClickListener{
     private static Context context;
 	private ArrayList<ImageView> ImageViewList = new ArrayList<>();
+	private String[] assignedImages = new String[12];
+	private Boolean[] gridStatus = new Boolean[12];
 	private File[] allImages = new File[6];
+	private Integer seconds = 0;
+	private Integer gameProgress = 0;
+	private boolean stopwatchStatus = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +40,19 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
         retrieveImages();
         getAllImageViews();
         assignImagesToGrid();
+
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				hideImages();
+				runStopwatch();
+			}
+		}, 3000);
+
+		//test stuff
+		Button button = findViewById(R.id.testSkip);
+		button.setOnClickListener(this);
     }
 
     protected void retrieveImages(){
@@ -61,12 +86,92 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 			do {
 				random = (int) (Math.random() * allImages.length);
 			}while (count[random] > 1);
-			count[random]+=1;
+			assignedImages[i] = allImages[random].getAbsolutePath();
 			ImageViewList.get(i).setImageBitmap(BitmapFactory.decodeFile(allImages[random].getAbsolutePath()));
+			count[random]+=1;
 		}
+		Arrays.fill(gridStatus, false);
 	}
+
+	protected void hideImages() {
+		for (int i = 1; i <= 12; i++) {
+			try {
+				int imgViewId = R.id.class.getField("img" + i).getInt(null);
+				ImageView imgView = findViewById(imgViewId);
+				imgView.setImageResource(R.drawable.placeholder);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NoSuchFieldException e) {
+				e.printStackTrace();
+			}
+		}
+		TextView head = findViewById(R.id.gameHead);
+		head.setText("Match!");
+	}
+
 	@Override
 	public void onClick(View view) {
+		int id = view.getId();
+		if (id == R.id.testSkip) {
+			addScore();
+		}
+		else{
+			toggleImage(view.getResources().getResourceName(id), view);
+		}
+	}
 
+	protected void toggleImage(String id, View view) {
+    	Integer grid = Integer.parseInt(id.substring(29))-1;
+    	//Integer grid = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
+		ImageView imageView = findViewById(view.getId());
+    	if (gridStatus[grid]) {
+			imageView.setImageResource(R.drawable.placeholder);
+			gridStatus[grid] = false;
+
+		} else {
+			imageView.setImageBitmap(BitmapFactory.decodeFile(assignedImages[grid]));
+			gridStatus[grid] = true;
+		}
+	}
+
+	protected void runStopwatch() {
+		TextView timeDisplay = findViewById(R.id.textGameTimer);
+		Handler handler = new Handler();
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				int hours = seconds / 3600;
+				int minutes = (seconds % 3600) / 60;
+				int secs = seconds % 60;
+				String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
+				timeDisplay.setText(time);
+				if (stopwatchStatus == true) {
+					seconds++;
+				}
+				handler.postDelayed(this, 1000);
+			}
+		});
+	}
+
+	protected void addScore() {
+    	gameProgress++;
+		TextView progress = findViewById(R.id.textGameProgress);
+		progress.setText(gameProgress + " out of 6 Matches");
+		if (gameProgress == 6) {
+			stopwatchStatus = false;
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					endGame();
+				}
+			}, 3000);
+		}
+	}
+
+	protected void endGame() {
+		Intent intent = new Intent(this, EndGame.class);
+		intent.putExtra("timeElapsed", seconds);
+		startActivity(intent);
 	}
 }

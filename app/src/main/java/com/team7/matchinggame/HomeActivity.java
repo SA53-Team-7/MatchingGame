@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
         else if(id == R.id.highestScores){
-            Intent intent = new Intent(this, Scoreboard.class);
+            Intent intent = new Intent(this, EndGame.class);
             startActivity(intent);
         }
     }

@@ -20,11 +20,8 @@
     <string name="score1">Score1</string>
     <string name="newGame">New Game</string>
     <string name="name1">Name1</string>
-
-
-    <style name="btnStyle">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
+    <string name="wellDone">Well Done</string>
+    <string name="next">NEXT</string>
+    <string name="enterName">Enter Your Name Here</string>
+    <string name="ok">OK</string>
 </resources>
