@@ -64,9 +64,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 			do {
 				random = (int) (Math.random() * allImages.length);
 			}while (count[random] > 1);
-			count[random]+=1;
 			assignedImages[i] = allImages[random].getAbsolutePath();
 			ImageViewList.get(i).setImageBitmap(BitmapFactory.decodeFile(allImages[random].getAbsolutePath()));
+			count[random]+=1;
 		}
 		Arrays.fill(gridStatus, false);
 	}
@@ -99,7 +99,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 			gridStatus[grid] = false;
 
 		} else {
-			imageView.setImageBitmap(BitmapFactory.decodeFile(assignedImages[grid]));
+			imageView.setImageBitmap(BitmapFactory.decodeFile(assignedImages[grid-1]));
 			gridStatus[grid] = true;
 		}
 	}
