@@ -45,10 +45,10 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
         textView.setText(time);
 
+        // Parsing my time and time5th to time formate
         SharedPreferences pref = getSharedPreferences
             ("scores", MODE_PRIVATE);
-        String time5th = pref.getString("time5th", "0");
-
+        String time5th = pref.getString("time5th", "-");
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         Date time5 = null;
         Date myTime = null;
@@ -59,7 +59,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             e.printStackTrace();
         }
         //Update scoreboard if top 5
-        if (myTime.before(time5) || time5th =="0") {
+        if (myTime.before(time5) || time5th =="-") {
 
             updateScore(time5, myTime, name, time);
         }
@@ -114,17 +114,17 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
                 ("scores", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
-        String time1st = pref.getString("time1st", "0");
-        String time2nd = pref.getString("time2nd", "0");
-        String time3rd = pref.getString("time3rd", "0");
-        String time4th = pref.getString("time4th", "0");
-        String time5th = pref.getString("time5th", "0");
+        String time1st = pref.getString("time1st", "-");
+        String time2nd = pref.getString("time2nd", "-");
+        String time3rd = pref.getString("time3rd", "-");
+        String time4th = pref.getString("time4th", "-");
+        String time5th = pref.getString("time5th", "-");
 
-        String name1st = pref.getString("name1st", "0");
-        String name2nd = pref.getString("name2nd", "0");
-        String name3rd = pref.getString("name3rd", "0");
-        String name4th = pref.getString("name4th", "0");
-        String name5th = pref.getString("name5th", "0");
+        String name1st = pref.getString("name1st", "-");
+        String name2nd = pref.getString("name2nd", "-");
+        String name3rd = pref.getString("name3rd", "-");
+        String name4th = pref.getString("name4th", "-");
+        String name5th = pref.getString("name5th", "-");
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         Date time1 = null;
@@ -142,7 +142,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
 
         //>1st become 1st and push the scoreboard downward
-        if (myTime.before(time1)|| time1st=="0" ) {
+        if (myTime.before(time1)|| time1st=="-" ) {
 
             editor.putString("name2nd", name1st);
             editor.putString("time2nd", time1st);
@@ -158,7 +158,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
         }
         //>2nd become 2nd and push the scoreboard downward
-        else if (myTime.before(time2)||time2nd=="0") {
+        else if (myTime.before(time2)||time2nd=="-") {
 
             editor.putString("name3rd", name2nd);
             editor.putString("time3rd", time2nd);
@@ -172,7 +172,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         }
 
         //>3rd become 3rd and push the scoreboard downward
-        else if (myTime.before(time3)||time3rd=="0") {
+        else if (myTime.before(time3)||time3rd=="-") {
             editor.putString("name4th", name3rd);
             editor.putString("time4th", time3rd);
             editor.putString("name5th", name4th);
@@ -182,7 +182,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             editor.putString("time3rd", time);
         }
 
-        else if (myTime.before(time4)||time4th=="0") {
+        else if (myTime.before(time4)||time4th=="-") {
             editor.putString("name5th", name4th);
             editor.putString("time5th", time4th);
 

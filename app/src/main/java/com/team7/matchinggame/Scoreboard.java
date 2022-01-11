@@ -28,17 +28,17 @@ public class Scoreboard extends AppCompatActivity implements View.OnClickListene
                 ("scores", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
-        String time1st = pref.getString("time1st", "0");
-        String time2nd = pref.getString("time2nd", "0");
-        String time3rd = pref.getString("time3rd", "0");
-        String time4th = pref.getString("time4th", "0");
-        String time5th = pref.getString("time5th", "0");
+        String time1st = pref.getString("time1st", "-");
+        String time2nd = pref.getString("time2nd", "-");
+        String time3rd = pref.getString("time3rd", "-");
+        String time4th = pref.getString("time4th", "-");
+        String time5th = pref.getString("time5th", "-");
 
-        String name1st = pref.getString("name1st", "0");
-        String name2nd = pref.getString("name2nd", "0");
-        String name3rd = pref.getString("name3rd", "0");
-        String name4th = pref.getString("name4th", "0");
-        String name5th = pref.getString("name5th", "0");
+        String name1st = pref.getString("name1st", "-");
+        String name2nd = pref.getString("name2nd", "-");
+        String name3rd = pref.getString("name3rd", "-");
+        String name4th = pref.getString("name4th", "-");
+        String name5th = pref.getString("name5th", "-");
 
         Integer[] number = {1,2,3,4,5,};
         String[] names = {name1st,name2nd,name3rd,name4th,name5th};
