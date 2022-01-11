@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:hint="Enter URL"
+        android:text="stocksnap.io"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/img1"
         app:layout_constraintHeight_percent="0.1"

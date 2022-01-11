@@ -27,9 +27,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="#abcdef"
-        android:textSize="15sp"
+        android:textSize="20sp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:textAllCaps="false"
-        android:text="@string/newGame" />
+        android:text="@string/mainmenu" />
 
 </LinearLayout>
 
