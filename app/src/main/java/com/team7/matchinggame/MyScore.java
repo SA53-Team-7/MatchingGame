@@ -69,7 +69,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
     }
 
     protected void setupBtns() {
-        int[] ids = { R.id.btnHome, R.id.btnScoreboard };
+        int[] ids = { R.id.btnHome, R.id.btnScoreboard, R.id.restartGame };
 
         for (int i=0; i<ids.length; i++) {
             Button btn = findViewById(ids[i]);
@@ -89,6 +89,10 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         }
         else if (id == R.id.btnScoreboard) {
             Intent intent = new Intent(this, Scoreboard.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.restartGame) {
+            Intent intent = new Intent(this, Game.class);
             startActivity(intent);
         }
     }
