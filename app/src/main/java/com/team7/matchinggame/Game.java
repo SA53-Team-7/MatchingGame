@@ -2,6 +2,7 @@ package com.team7.matchinggame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +48,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				runStopwatch();
 			}
 		}, 3000);
+
+		//test stuff
+		Button button = findViewById(R.id.testSkip);
+		button.setOnClickListener(this);
     }
 
     protected void retrieveImages(){
@@ -105,7 +111,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	@Override
 	public void onClick(View view) {
 		int id = view.getId();
-		toggleImage(view.getResources().getResourceName(id), view);
+		if (id == R.id.testSkip) {
+			endGame();
+		}
+		else{
+			toggleImage(view.getResources().getResourceName(id), view);
+		}
 	}
 
 	protected void toggleImage(String id, View view) {
@@ -146,6 +157,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	}
 
 	protected void endGame() {
-
+		Intent intent = new Intent(this, MyScore.class);
+		intent.putExtra("timeElpsed", seconds);
+		startActivity(intent);
 	}
 }
