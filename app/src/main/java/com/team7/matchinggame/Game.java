@@ -6,14 +6,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Game extends AppCompatActivity implements View.OnClickListener{
     private static Context context;
@@ -21,6 +24,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	private String[] assignedImages = new String[12];
 	private Boolean[] gridStatus = new Boolean[12];
 	private File[] allImages = new File[6];
+	private Integer seconds = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
         getAllImageViews();
         assignImagesToGrid();
         hideImages();
+        runStopwatch();
     }
 
     protected void retrieveImages(){
@@ -103,5 +108,22 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 			imageView.setImageBitmap(BitmapFactory.decodeFile(assignedImages[grid]));
 			gridStatus[grid] = true;
 		}
+	}
+
+	protected void runStopwatch() {
+		TextView timeDisplay = findViewById(R.id.textGameTimer);
+		Handler handler = new Handler();
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				int hours = seconds / 3600;
+				int minutes = (seconds % 3600) / 60;
+				int secs = seconds % 60;
+				String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
+				timeDisplay.setText(time);
+				seconds++;
+				handler.postDelayed(this, 1000);
+			}
+		});
 	}
 }
