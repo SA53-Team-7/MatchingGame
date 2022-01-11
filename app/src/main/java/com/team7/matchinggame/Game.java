@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	private Boolean[] gridStatus = new Boolean[12];
 	private File[] allImages = new File[6];
 	private Integer seconds = 0;
+	private Integer gameProgress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,15 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
         retrieveImages();
         getAllImageViews();
         assignImagesToGrid();
-        hideImages();
-        runStopwatch();
+
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				hideImages();
+				runStopwatch();
+			}
+		}, 3000);
     }
 
     protected void retrieveImages(){
@@ -88,6 +98,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				e.printStackTrace();
 			}
 		}
+		TextView head = findViewById(R.id.gameHead);
+		head.setText("Match!");
 	}
 
 	@Override
@@ -125,5 +137,15 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				handler.postDelayed(this, 1000);
 			}
 		});
+	}
+
+	protected void addScore() {
+    	gameProgress++;
+		TextView progress = findViewById(R.id.textGameProgress);
+		progress.setText(gameProgress + " out of 6 Matches");
+	}
+
+	protected void endGame() {
+
 	}
 }
