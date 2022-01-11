@@ -92,14 +92,15 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	}
 
 	protected void toggleImage(String id, View view) {
-    	Integer grid = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
+    	Integer grid = Integer.parseInt(id.substring(29))-1;
+    	//Integer grid = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
 		ImageView imageView = findViewById(view.getId());
     	if (gridStatus[grid]) {
 			imageView.setImageResource(R.drawable.placeholder);
 			gridStatus[grid] = false;
 
 		} else {
-			imageView.setImageBitmap(BitmapFactory.decodeFile(assignedImages[grid-1]));
+			imageView.setImageBitmap(BitmapFactory.decodeFile(assignedImages[grid]));
 			gridStatus[grid] = true;
 		}
 	}
