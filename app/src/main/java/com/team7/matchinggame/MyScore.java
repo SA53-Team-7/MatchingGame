@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,8 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         setupBtns();
         // For testing purpose only -> for real game uncomment the initScores()
         initScores();
-
+        MediaPlayer clap = MediaPlayer.create(MyScore.this, R.raw.clap);
+        clap.start();
 
         //Get time taken from Game activity
         Integer timeElapsed = getIntent().getIntExtra("timeElapsed", 0);

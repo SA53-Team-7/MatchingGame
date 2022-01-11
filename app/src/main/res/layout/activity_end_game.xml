@@ -10,7 +10,7 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:padding="20dp"
         android:text="@string/wellDone"
@@ -34,7 +34,7 @@
     <Button
         android:id="@+id/next"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="120dp"
         android:backgroundTint="@color/teal_200"
         android:insetTop="0dp"
         android:insetBottom="0dp"
@@ -44,7 +44,6 @@
         app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gifImageView" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -20,8 +20,9 @@
     <string name="score1">Score1</string>
     <string name="newGame">New Game</string>
     <string name="name1">Name1</string>
-    <string name="wellDone">Well Done</string>
+    <string name="wellDone">Well Done!!</string>
     <string name="next">NEXT</string>
     <string name="enterName">Enter Your Name Here</string>
     <string name="ok">OK</string>
+    <string name="name">Name</string>
 </resources>
