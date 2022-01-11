@@ -157,7 +157,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	}
 
 	protected void endGame() {
-		Intent intent = new Intent(this, MyScore.class);
+		Intent intent = new Intent(this, EndGame.class);
 		intent.putExtra("timeElpsed", seconds);
 		startActivity(intent);
 	}
