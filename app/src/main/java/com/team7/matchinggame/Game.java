@@ -3,7 +3,6 @@ package com.team7.matchinggame;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -23,7 +21,7 @@ import java.util.Arrays;
 import java.util.Locale;
 
 public class Game extends AppCompatActivity implements View.OnClickListener{
-    private static Context context;
+    private Context context;
 	private ArrayList<ImageView> ImageViewList = new ArrayList<>();
 	private String[] assignedImages = new String[12];
 	private Integer[] gridStatus = new Integer[12];
