@@ -24,7 +24,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_score);
         setupBtns();
-        // For testing purpose only -> for real game uncomment the initScores()
+        // Init only for the first time
         initScores();
         MediaPlayer clap = MediaPlayer.create(MyScore.this, R.raw.clap);
         clap.start();
@@ -100,18 +100,24 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
     public void initScores(){
         SharedPreferences pref = getSharedPreferences
                 ("scores", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("name1st","Lisa");
-        editor.putString("time1st","0:00:05");
-        editor.putString("name2nd","Jennie");
-        editor.putString("time2nd","0:00:10");
-        editor.putString("name3rd","Rose");
-        editor.putString("time3rd","0:00:15");
-        editor.putString("name4th","Jisoo");
-        editor.putString("time4th","0:00:20");
-        editor.putString("name5th","GD");
-        editor.putString("time5th","0:00:25");
-        editor.commit();
+        Boolean init = pref.getBoolean("init", false);
+
+        if(init==false){
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("init", true);
+
+            editor.putString("name1st","Lisa");
+            editor.putString("time1st","0:00:10");
+            editor.putString("name2nd","Jennie");
+            editor.putString("time2nd","0:00:20");
+            editor.putString("name3rd","Rose");
+            editor.putString("time3rd","0:00:30");
+            editor.putString("name4th","Jisoo");
+            editor.putString("time4th","0:00:40");
+            editor.putString("name5th","GD");
+            editor.putString("time5th","0:00:50");
+            editor.commit();
+        }
     }
 
 
