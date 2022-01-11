@@ -88,10 +88,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	@Override
 	public void onClick(View view) {
 		int id = view.getId();
-		selectImage(view.getResources().getResourceName(id), view);
+		toggleImage(view.getResources().getResourceName(id), view);
 	}
 
-	protected void selectImage(String id, View view) {
+	protected void toggleImage(String id, View view) {
     	Integer grid = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
 		ImageView imageView = findViewById(view.getId());
     	if (gridStatus[grid]) {
