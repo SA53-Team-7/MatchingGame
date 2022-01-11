@@ -18,6 +18,8 @@ import java.util.Arrays;
 public class Game extends AppCompatActivity implements View.OnClickListener{
     private static Context context;
 	private ArrayList<ImageView> ImageViewList = new ArrayList<>();
+	private String[] assignedImages = new String[12];
+	private Boolean[] gridStatus = new Boolean[12];
 	private File[] allImages = new File[6];
 
     @Override
@@ -28,6 +30,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
         retrieveImages();
         getAllImageViews();
         assignImagesToGrid();
+        hideImages();
     }
 
     protected void retrieveImages(){
@@ -62,11 +65,42 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				random = (int) (Math.random() * allImages.length);
 			}while (count[random] > 1);
 			count[random]+=1;
+			assignedImages[i] = allImages[random].getAbsolutePath();
 			ImageViewList.get(i).setImageBitmap(BitmapFactory.decodeFile(allImages[random].getAbsolutePath()));
 		}
+		Arrays.fill(gridStatus, false);
 	}
+
+	protected void hideImages() {
+		for (int i = 1; i <= 12; i++) {
+			try {
+				int imgViewId = R.id.class.getField("img" + i).getInt(null);
+				ImageView imgView = findViewById(imgViewId);
+				imgView.setImageResource(R.drawable.placeholder);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NoSuchFieldException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@Override
 	public void onClick(View view) {
+		int id = view.getId();
+		selectImage(view.getResources().getResourceName(id), view);
+	}
 
+	protected void selectImage(String id, View view) {
+    	Integer grid = Integer.parseInt(String.valueOf(id.charAt(id.length()-1)));
+		ImageView imageView = findViewById(view.getId());
+    	if (gridStatus[grid]) {
+			imageView.setImageResource(R.drawable.placeholder);
+			gridStatus[grid] = false;
+
+		} else {
+			imageView.setImageBitmap(BitmapFactory.decodeFile(assignedImages[grid]));
+			gridStatus[grid] = true;
+		}
 	}
 }
