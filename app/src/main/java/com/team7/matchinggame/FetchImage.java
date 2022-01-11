@@ -28,7 +28,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     private ArrayList<ImageView> ImageViewList = new ArrayList<>(); // contains all imageviews
     private HashMap<Integer, String> FileNameLists = new HashMap<>(); // contains imageview IDs and respective file name
     private ArrayList<String> selectedImages = new ArrayList(); // contains imageview IDs of selected cards
-    private static Context context;
+    private Context context;
     private String webURL;
     private ArrayList<String> imgURLList = new ArrayList<String>();
     private int count;
