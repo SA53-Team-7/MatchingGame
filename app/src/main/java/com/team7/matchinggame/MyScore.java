@@ -10,27 +10,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
-    // (Eric's part not sure what is wrong)
-    /*long timeElapsed; //in ms
-    String name = "Lisa";
-    SharedPreferences sharedPref = getSharedPreferences("scores", Context.MODE_PRIVATE);
-    long time1st = sharedPref.getLong("time1st", 0);
-    long time2nd = sharedPref.getLong("time2nd", 0);
-    long time3rd = sharedPref.getLong("time3rd", 0);
-    long time4th = sharedPref.getLong("time4th", 0);
-    long time5th = sharedPref.getLong("time5th", 0);
-    int minutes;
-    int seconds;*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_score);
         setupBtns();
+        initScores();
+
 
         //Get time taken from Game activity
         Integer timeElapsed = getIntent().getIntExtra("timeElapsed", 0);
@@ -49,11 +44,24 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
         textView.setText(time);
 
-        // (Eric's part not sure what is wrong)
+        SharedPreferences pref = getSharedPreferences
+            ("scores", MODE_PRIVATE);
+        String time5th = pref.getString("time5th", "0");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        Date time5 = null;
+        Date myTime = null;
+        try {
+            time5 = sdf.parse(time5th);
+            myTime = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         //Update scoreboard if top 5
-        /*if (timeElapsed < time5th || (time5th == 0)) {
-            updateScore();
-        }*/
+        if (myTime.before(time5)) {
+
+            updateScore(time5, myTime, name, time);
+        }
     }
 
     protected void setupBtns() {
@@ -81,68 +89,114 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    // (Eric's part not sure what is wrong)
-    /*public void updateScore() {
-        Context context = getApplicationContext();
-        sharedPref = context.getSharedPreferences("scores",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+    public void initScores(){
+        SharedPreferences pref = getSharedPreferences
+                ("scores", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("name1st","Lisa");
+        editor.putString("time1st","0:00:05");
+        editor.putString("name2nd","Jennie");
+        editor.putString("time2nd","0:00:10");
+        editor.putString("name3rd","Rose");
+        editor.putString("time3rd","0:00:15");
+        editor.putString("name4th","Jisoo");
+        editor.putString("time4th","0:00:20");
+        editor.putString("name5th","GD");
+        editor.putString("time5th","0:00:25");
+        editor.commit();
+    };
+
+
+    public void updateScore(Date time5, Date myTime, String name, String time) {
+
+        SharedPreferences pref = getSharedPreferences
+                ("scores", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        String time1st = pref.getString("time1st", "0");
+        String time2nd = pref.getString("time2nd", "0");
+        String time3rd = pref.getString("time3rd", "0");
+        String time4th = pref.getString("time4th", "0");
+        String time5th = pref.getString("time5th", "0");
+
+        String name1st = pref.getString("name1st", "0");
+        String name2nd = pref.getString("name2nd", "0");
+        String name3rd = pref.getString("name3rd", "0");
+        String name4th = pref.getString("name4th", "0");
+        String name5th = pref.getString("name5th", "0");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        Date time1 = null;
+        Date time2 = null;
+        Date time3 = null;
+        Date time4 = null;
+        try {
+            time1 = sdf.parse(time1st);
+            time2 = sdf.parse(time2nd);
+            time3 = sdf.parse(time3rd);
+            time4 = sdf.parse(time4th);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         //>1st become 1st and push the scoreboard downward
-        if (timeElapsed < time1st || (time1st == 0)) {
+        if (myTime.before(time1)) {
 
-            editor.putString("name2nd", sharedPref.getString("name1st", "PLayer2nd"));
-            editor.putLong("time2nd", sharedPref.getLong("time1st", 0));
-            editor.putString("name3rd", sharedPref.getString("name2nd", "Player3rd"));
-            editor.putLong("time3rd", sharedPref.getLong("time2nd", 0));
-            editor.putString("name4th", sharedPref.getString("name3rd", "Player4th"));
-            editor.putLong("time4th", sharedPref.getLong("time3rd", 0));
-            editor.putString("name5th", sharedPref.getString("name4th", "Player5th"));
-            editor.putLong("time5th", sharedPref.getLong("time4th", 0));
+            editor.putString("name2nd", name1st);
+            editor.putString("time2nd", time1st);
+            editor.putString("name3rd", name2nd);
+            editor.putString("time3rd", time2nd);
+            editor.putString("name4th", name3rd);
+            editor.putString("time4th", time3rd);
+            editor.putString("name5th", name4th);
+            editor.putString("time5th", time4th);
 
             editor.putString("name1st", name);
-            editor.putLong("time1st", timeElapsed);
+            editor.putString("time1st", time);
 
         }
-        else if (timeElapsed < time2nd || (time2nd == 0)) {
+        //>2nd become 2nd and push the scoreboard downward
+        else if (myTime.before(time2)) {
 
-            editor.putString("name3rd", sharedPref.getString("name2nd", "Player3rd"));
-            editor.putLong("time3rd", sharedPref.getLong("time2nd", 0));
-            editor.putString("name4th", sharedPref.getString("name3rd", "Player4th"));
-            editor.putLong("time4th", sharedPref.getLong("time3rd", 0));
-            editor.putString("name5th", sharedPref.getString("name4th", "Player5th"));
-            editor.putLong("time5th", sharedPref.getLong("time4th", 0));
+            editor.putString("name3rd", name2nd);
+            editor.putString("time3rd", time2nd);
+            editor.putString("name4th", name3rd);
+            editor.putString("time4th", time3rd);
+            editor.putString("name5th", name4th);
+            editor.putString("time5th", time4th);
 
             editor.putString("name2nd", name);
-            editor.putLong("time2nd", timeElapsed);
-
+            editor.putString("time2nd", time);
         }
 
-        else if (timeElapsed < time3rd || (time3rd == 0)) {
-            editor.putString("name4th", sharedPref.getString("name3rd", "Player4th"));
-            editor.putLong("time4th", sharedPref.getLong("time3rd", 0));
-            editor.putString("name5th", sharedPref.getString("name4th", "Player5th"));
-            editor.putLong("time5th", sharedPref.getLong("time4th", 0));
+        //>3rd become 3rd and push the scoreboard downward
+        else if (myTime.before(time3)) {
+            editor.putString("name4th", name3rd);
+            editor.putString("time4th", time3rd);
+            editor.putString("name5th", name4th);
+            editor.putString("time5th", time4th);
 
             editor.putString("name3rd", name);
-            editor.putLong("time3rd", timeElapsed);
+            editor.putString("time3rd", time);
         }
 
-        else if (timeElapsed < time4th || (time4th == 0)) {
-            editor.putString("name5th", sharedPref.getString("name4th", "Player5th"));
-            editor.putLong("time5th", sharedPref.getLong("time4th", 0));
+        else if (myTime.before(time4)) {
+            editor.putString("name5th", name4th);
+            editor.putString("time5th", time4th);
 
             editor.putString("name4th", name);
-            editor.putLong("time4th", timeElapsed);
+            editor.putString("time4th", time);
         }
 
         else {
             editor.putString("name5th", name);
-            editor.putLong("time5th", timeElapsed);
+            editor.putString("time5th", time);
 
         }
         editor.commit();
 
 
-    }*/
+    }
 
 }
