@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D6EAF8"
     tools:context=".HomeActivity">
 
     <TextView
@@ -23,12 +24,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startGame"
-        style="@style/btnStyle"
         android:layout_width="160dp"
         android:layout_height="50dp"
         android:layout_marginBottom="420dp"
-        android:background="#99e3e3"
+        android:background="#A3E4D7"
         android:text="@string/startGame"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.70"
         app:layout_constraintHorizontal_bias="0.50"
@@ -37,12 +40,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/settings"
-        style="@style/btnStyle"
         android:layout_width="160dp"
         android:layout_height="50dp"
         android:layout_marginBottom="330dp"
-        android:background="#99e3e3"
+        android:background="#A3E4D7"
         android:text="@string/settings"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.70"
         app:layout_constraintHorizontal_bias="0.50"
@@ -51,12 +56,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/highestScores"
-        style="@style/btnStyle"
         android:layout_width="160dp"
         android:layout_height="50dp"
         android:layout_marginBottom="240dp"
-        android:background="#99e3e3"
+        android:background="#A3E4D7"
         android:text="@string/highestScores"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.70"
         app:layout_constraintHorizontal_bias="0.50"

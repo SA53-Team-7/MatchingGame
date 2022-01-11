@@ -24,11 +24,4 @@
     <string name="next">NEXT</string>
     <string name="enterName">Enter Your Name Here</string>
     <string name="ok">OK</string>
-
-
-    <style name="btnStyle">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
 </resources>

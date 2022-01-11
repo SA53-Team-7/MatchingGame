@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D6EAF8"
     tools:context=".Settings">
 
     <TextView
         android:id="@+id/settingsTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#A3E4D7"
         android:text="@string/settings"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:gravity="center"
         android:textColor="@color/black"
+        android:padding="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="MissingConstraints" />
@@ -24,6 +28,7 @@
         android:text="@string/backgroundMusic"
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:paddingTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settingsTitle"
         tools:ignore="MissingConstraints" />
@@ -69,7 +74,7 @@
         android:text="@string/volume"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:layout_marginTop="20dp"
+        android:paddingTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/musicOn"
         tools:ignore="MissingConstraints" />
@@ -108,12 +113,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/settingHome"
-        style="@style/btnStyle"
-        android:layout_width="160dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="320dp"
-        android:background="#99e3e3"
+        android:layout_marginBottom="280dp"
+        android:background="#A3E4D7"
         android:text="@string/home"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
