@@ -48,7 +48,7 @@
         app:layout_constraintWidth_percent="0.3"
         app:layout_constraintHeight_percent="0.05"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -60,7 +60,7 @@
         app:layout_constraintWidth_percent="0.33"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -72,7 +72,7 @@
         app:layout_constraintWidth_percent="0.33"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img3"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -84,7 +84,7 @@
         app:layout_constraintWidth_percent="0.33"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img4"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -95,7 +95,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img5"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -106,7 +106,7 @@
         app:layout_constraintLeft_toRightOf="@id/img4"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img6"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -117,7 +117,7 @@
         app:layout_constraintLeft_toRightOf="@id/img5"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img7"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -128,7 +128,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img8"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -139,7 +139,7 @@
         app:layout_constraintLeft_toRightOf="@id/img7"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img9"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -150,7 +150,7 @@
         app:layout_constraintLeft_toRightOf="@id/img8"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img10"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -161,7 +161,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img11"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -172,7 +172,7 @@
         app:layout_constraintLeft_toRightOf="@id/img10"
         app:srcCompat="@drawable/question_mark" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/img12"
         android:layout_width="0dp"
         android:layout_height="0dp"

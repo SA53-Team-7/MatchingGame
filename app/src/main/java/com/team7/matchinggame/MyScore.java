@@ -2,7 +2,6 @@ package com.team7.matchinggame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -45,11 +44,11 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
         textView.setText(time);
 
-        // Parsing my time and time5th to time formate
+        // Parsing my time and time5th to time format
         SharedPreferences pref = getSharedPreferences
             ("scores", MODE_PRIVATE);
         String time5th = pref.getString("time5th", "-");
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
         Date time5 = null;
         Date myTime = null;
         try {
@@ -59,14 +58,16 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             e.printStackTrace();
         }
         //Update scoreboard if top 5
-        if (myTime.before(time5) || time5th =="-") {
+        if (myTime!=null) {
+            if (myTime.before(time5) || time5th.equals("-")){
 
-            updateScore(time5, myTime, name, time);
+                updateScore(myTime, name, time);
+            }
         }
     }
 
     protected void setupBtns() {
-        int[] ids = { R.id.btnHome, R.id.btnScoreboard };
+        int[] ids = { R.id.btnHome, R.id.btnScoreboard, R.id.restartGame };
 
         for (int i=0; i<ids.length; i++) {
             Button btn = findViewById(ids[i]);
@@ -88,6 +89,10 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             Intent intent = new Intent(this, Scoreboard.class);
             startActivity(intent);
         }
+        else if (id == R.id.restartGame) {
+            Intent intent = new Intent(this, Game.class);
+            startActivity(intent);
+        }
     }
 
     public void initScores(){
@@ -105,10 +110,10 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         editor.putString("name5th","GD");
         editor.putString("time5th","0:00:25");
         editor.commit();
-    };
+    }
 
 
-    public void updateScore(Date time5, Date myTime, String name, String time) {
+    public void updateScore(Date myTime, String name, String time) {
 
         SharedPreferences pref = getSharedPreferences
                 ("scores", MODE_PRIVATE);
@@ -118,15 +123,13 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         String time2nd = pref.getString("time2nd", "-");
         String time3rd = pref.getString("time3rd", "-");
         String time4th = pref.getString("time4th", "-");
-        String time5th = pref.getString("time5th", "-");
 
         String name1st = pref.getString("name1st", "-");
         String name2nd = pref.getString("name2nd", "-");
         String name3rd = pref.getString("name3rd", "-");
         String name4th = pref.getString("name4th", "-");
-        String name5th = pref.getString("name5th", "-");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
         Date time1 = null;
         Date time2 = null;
         Date time3 = null;
@@ -142,7 +145,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
 
         //>1st become 1st and push the scoreboard downward
-        if (myTime.before(time1)|| time1st=="-" ) {
+        if (myTime.before(time1)|| time1st.equals("-")){
 
             editor.putString("name2nd", name1st);
             editor.putString("time2nd", time1st);
@@ -158,7 +161,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
         }
         //>2nd become 2nd and push the scoreboard downward
-        else if (myTime.before(time2)||time2nd=="-") {
+        else if (myTime.before(time2)||time2nd.equals("-")){
 
             editor.putString("name3rd", name2nd);
             editor.putString("time3rd", time2nd);
@@ -172,7 +175,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
         }
 
         //>3rd become 3rd and push the scoreboard downward
-        else if (myTime.before(time3)||time3rd=="-") {
+        else if (myTime.before(time3)||time3rd.equals("-")){
             editor.putString("name4th", name3rd);
             editor.putString("time4th", time3rd);
             editor.putString("name5th", name4th);
@@ -182,7 +185,7 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
             editor.putString("time3rd", time);
         }
 
-        else if (myTime.before(time4)||time4th=="-") {
+        else if (myTime.before(time4)||time4th.equals("-")){
             editor.putString("name5th", name4th);
             editor.putString("time5th", time4th);
 
