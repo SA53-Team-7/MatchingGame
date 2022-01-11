@@ -28,11 +28,10 @@ public class Settings extends AppCompatActivity
     //bind Settings to MusicService
     private boolean mIsBound = false;
     private MusicService musicService;
-    private ServiceConnection sConnection =new ServiceConnection(){
-
+    private ServiceConnection sConnection = new ServiceConnection(){
         public void onServiceConnected(ComponentName name, IBinder
                 binder) {
-            musicService =  ((MusicService.ServiceBinder)binder).getService();
+            musicService = ((MusicService.ServiceBinder)binder).getService();
         }
 
         public void onServiceDisconnected(ComponentName name) {
@@ -41,7 +40,7 @@ public class Settings extends AppCompatActivity
     };
 
     void doBindService(){
-        bindService(new Intent(this,MusicService.class),
+        bindService(new Intent(this, MusicService.class),
                 sConnection,Context.BIND_AUTO_CREATE);
         mIsBound = true;
     }
@@ -64,8 +63,12 @@ public class Settings extends AppCompatActivity
         volumeUpBtn = findViewById(R.id.volumeUp);
         volumeDownBtn = findViewById(R.id.volumeDown);
 
+        homeBtn = findViewById(R.id.settingHome);
+        homeBtn.setOnClickListener(this);
+
         doBindService();
 
+        // modify the volume of background music
         AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         volumeUpBtn.setOnClickListener(v -> {
             audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
@@ -75,10 +78,6 @@ public class Settings extends AppCompatActivity
             audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
             Toast.makeText(this, "Volume down", Toast.LENGTH_SHORT).show();
         });
-
-        homeBtn = findViewById(R.id.settingHome);
-        homeBtn.setOnClickListener(this);
-
     }
 
     public void turnOnMusic(View v) {
