@@ -33,7 +33,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	private boolean stopwatchStatus = true;
 	private boolean isbusy = false;
 	private String selected1;
-	private String selected2;
 	private View previousGrid;
 
     @Override
