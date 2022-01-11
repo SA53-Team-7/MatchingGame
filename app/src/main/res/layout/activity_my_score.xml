@@ -55,7 +55,7 @@
             android:background="#abcdef"
             android:textSize="20sp"
             android:textAllCaps="false"
-            android:text="@string/newGame" />
+            android:text="@string/mainmenu" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnScoreboard"
