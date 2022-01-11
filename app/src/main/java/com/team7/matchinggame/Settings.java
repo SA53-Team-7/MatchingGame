@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
@@ -23,7 +22,6 @@ public class Settings extends AppCompatActivity
     Button volumeUpBtn;
     Button volumeDownBtn;
     Button homeBtn;
-    MediaPlayer player;
 
     //bind Settings to MusicService
     private boolean mIsBound = false;
