@@ -27,6 +27,9 @@ public class EnterName extends AppCompatActivity implements View.OnClickListener
         if (name != null) {
             Intent intent = new Intent(this, MyScore.class);
             intent.putExtra("name", name.getText().toString());
+            Intent previous = getIntent();
+            int time = previous.getIntExtra("timeElapsed", 0);
+            intent.putExtra("timeElapsed", time);
             startActivity(intent);
         }
     }

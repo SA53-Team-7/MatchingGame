@@ -33,6 +33,9 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener{
 
         if (id == R.id.next) {
             Intent intent = new Intent(this, EnterName.class);
+            Intent previous = getIntent();
+            int time = previous.getIntExtra("timeElapsed", 0);
+            intent.putExtra("timeElapsed", time);
             startActivity(intent);
         }
     }

@@ -30,6 +30,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	private File[] allImages = new File[6];
 	private Integer seconds = 0;
 	private Integer gameProgress = 0;
+	private boolean stopwatchStatus = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 	public void onClick(View view) {
 		int id = view.getId();
 		if (id == R.id.testSkip) {
-			endGame();
+			addScore();
 		}
 		else{
 			toggleImage(view.getResources().getResourceName(id), view);
@@ -144,7 +145,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				int secs = seconds % 60;
 				String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
 				timeDisplay.setText(time);
-				seconds++;
+				if (stopwatchStatus == true) {
+					seconds++;
+				}
 				handler.postDelayed(this, 1000);
 			}
 		});
@@ -154,11 +157,21 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
     	gameProgress++;
 		TextView progress = findViewById(R.id.textGameProgress);
 		progress.setText(gameProgress + " out of 6 Matches");
+		if (gameProgress == 6) {
+			stopwatchStatus = false;
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					endGame();
+				}
+			}, 3000);
+		}
 	}
 
 	protected void endGame() {
 		Intent intent = new Intent(this, EndGame.class);
-		intent.putExtra("timeElpsed", seconds);
+		intent.putExtra("timeElapsed", seconds);
 		startActivity(intent);
 	}
 }

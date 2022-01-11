@@ -15,6 +15,16 @@
         android:layout_marginTop="50dp"/>
 
     <TextView
+        android:id="@+id/myName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="Name"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        />
+
+    <TextView
         android:id="@+id/myScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
