@@ -214,7 +214,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				public void run() {
 					endGame();
 				}
-			}, 3000);
+			}, 1000);
 		}
 	}
 

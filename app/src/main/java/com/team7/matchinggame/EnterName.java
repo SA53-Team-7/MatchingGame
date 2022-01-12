@@ -24,7 +24,7 @@ public class EnterName extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         EditText name = findViewById(R.id.enterName);
-        if (name != null) {
+        if (name != null && name.length() >= 1) {
             Intent intent = new Intent(this, MyScore.class);
             intent.putExtra("name", name.getText().toString());
             Intent previous = getIntent();
