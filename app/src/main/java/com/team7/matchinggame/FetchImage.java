@@ -84,7 +84,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
                     count = 1;
                     checkImageNum();
-
                     displayImg();
                 }
             });
@@ -132,53 +131,49 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
 
     protected void displayImg(){
-        // count = 1;
+        bgThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i = 1; i <= imgURLList.size(); i++){
+                    Log.e("i", String.valueOf(i));
+                    final int num = i;
 
-            bgThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for(int i = 1; i <= imgURLList.size(); i++){
-                        Log.e("i", String.valueOf(i));
-                        final int num = i;
-
-                    DownloadImageHelper dhelper = new DownloadImageHelper(context);
-                    File f = dhelper.downloadImgByURL(imgURLList.get(num - 1));
-                    if (f != null) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                int resId = 0;
-                                try {
-                                    resId = R.id.class.getField("img" + String.valueOf(num)).getInt(null);
-                                } catch (IllegalAccessException e) {
-                                    e.printStackTrace();
-                                } catch (NoSuchFieldException e) {
-                                    e.printStackTrace();
-                                }
-
-                                // Store ImageView ID and associated image with it
-                                FileNameLists.put(resId, f.getName());
-
-                                // load all images
-                                ImageView imageView = findViewById(resId);
-                                Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
-                                imageView.setImageBitmap(bitmap);
-
-                                displayProgress(num);
-
-                                if (Thread.interrupted()) {
-                                    return;
-                                }
+                DownloadImageHelper dhelper = new DownloadImageHelper(context);
+                File f = dhelper.downloadImgByURL(imgURLList.get(num - 1));
+                if (f != null) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int resId = 0;
+                            try {
+                                resId = R.id.class.getField("img" + String.valueOf(num)).getInt(null);
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchFieldException e) {
+                                e.printStackTrace();
                             }
-                        });
-                    }
+
+                            // Store ImageView ID and associated image with it
+                            FileNameLists.put(resId, f.getName());
+
+                            // load all images
+                            ImageView imageView = findViewById(resId);
+                            Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
+                            imageView.setImageBitmap(bitmap);
+
+                            displayProgress(num);
+
+                            if (Thread.interrupted()) {
+                                return;
+                            }
+                        }
+                    });
                 }
-                }
-            });
-            bgThread.start();
+            }
+            }
+        });
+        bgThread.start();
         }
-
-
 
     protected void setupImageSelection() {
         for (int i = 1; i < 21; i++) {
