@@ -18,10 +18,6 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Intent intentMusic = new Intent(HomeActivity.this,MusicService.class);
-        intentMusic.putExtra("class","main");
-        startService(intentMusic);
-
         startGameBtn = findViewById(R.id.startGame);
         startGameBtn.setOnClickListener(this);
 
@@ -32,15 +28,6 @@ public class HomeActivity extends AppCompatActivity
         highestScoresBtn.setOnClickListener(this);
 
     }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Intent intentMusic = new Intent(HomeActivity.this,MusicService.class);
-        intentMusic.putExtra("class","main");
-        startService(intentMusic);
-    }
-
 
     @Override
     public void onClick(View view) {
