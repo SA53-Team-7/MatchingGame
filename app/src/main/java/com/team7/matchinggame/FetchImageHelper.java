@@ -31,10 +31,9 @@ public class FetchImageHelper {
 
             while((line = reader.readLine()) != null){
 
-                if (line.contains("img src=\"https://"))
+                if (line.contains("img src=\"https://") && !line.contains("smiley"))
                     for (String s: suffix)
                         if (line.contains(s)) {
-                            Log.e("URL", line);
                             line = grabImg(line);
                             imgURLList.add(line);
                             // if images number = 35, stop grab
@@ -91,11 +90,8 @@ public class FetchImageHelper {
                 randomImgs.add(allImgURL.get(i));
             }
         }
-        // if image URL list < 20, also sent to activity
         else
             randomImgs = allImgURL;
-        Log.e("number of list after randomly", String
-                .valueOf(randomImgs.size()));
         return randomImgs;
     }
 }
