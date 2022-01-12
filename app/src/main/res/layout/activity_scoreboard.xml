@@ -31,7 +31,9 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textAllCaps="false"
-        android:text="@string/mainmenu" />
+        android:drawableLeft
+            ="@drawable/back"
+        android:text="@string/back" />
 
 </LinearLayout>
 
