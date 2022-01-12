@@ -91,14 +91,14 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    protected void displayProgress(){
+    protected void displayProgress(int number){
         // progress bar and text view
         ProgressBar progressBar = findViewById(R.id.progressBar);
         TextView progressDesc = findViewById(R.id.progressDesc);
 
         progressBar.setMax(imgURLList.size());
         progressBar.setProgress(count);
-        progressDesc.setText("Downloading " + String.valueOf(count) + " of " + String.valueOf(imgURLList.size()) + " images...");
+        progressDesc.setText("Downloading " + String.valueOf(number) + " of " + String.valueOf(imgURLList.size()) + " images...");
         count++;
 
         // downloading finished, toast text
@@ -164,7 +164,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
 
-                                displayProgress();
+                                displayProgress(num);
 
                                 if (Thread.interrupted()) {
                                     return;
