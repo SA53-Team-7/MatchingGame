@@ -33,6 +33,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     private ArrayList<String> imgURLList = new ArrayList<String>();
     private int count;
     private TextView progressDesc;
+    private Thread bgThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,11 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    if (bgThread != null) {
+                        bgThread.interrupt();
+                    }
+
                     // removes old images from previous fetch
                     cleanUpImages(2);
 
@@ -80,7 +86,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     checkImageNum();
 
                     displayImg();
-
                 }
             });
         }
@@ -127,22 +132,24 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
 
     protected void displayImg(){
-        count = 1;
-        for(int i = 1; i <= imgURLList.size(); i++){
-            Log.e("i", String.valueOf(i));
-            final int num = i;
-            new Thread(new Runnable() {
+        // count = 1;
+
+            bgThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    for(int i = 1; i <= imgURLList.size(); i++){
+                        Log.e("i", String.valueOf(i));
+                        final int num = i;
+
                     DownloadImageHelper dhelper = new DownloadImageHelper(context);
-                    File f = dhelper.downloadImgByURL(imgURLList.get(num-1));
-                    if (f != null){
+                    File f = dhelper.downloadImgByURL(imgURLList.get(num - 1));
+                    if (f != null) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 int resId = 0;
                                 try {
-                                    resId = R.id.class.getField("img" + String.valueOf(count)).getInt(null);
+                                    resId = R.id.class.getField("img" + String.valueOf(num)).getInt(null);
                                 } catch (IllegalAccessException e) {
                                     e.printStackTrace();
                                 } catch (NoSuchFieldException e) {
@@ -158,13 +165,19 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                 imageView.setImageBitmap(bitmap);
 
                                 displayProgress();
+
+                                if (Thread.interrupted()) {
+                                    return;
+                                }
                             }
                         });
                     }
                 }
-            }).start();
+                }
+            });
+            bgThread.start();
         }
-    }
+
 
 
     protected void setupImageSelection() {
