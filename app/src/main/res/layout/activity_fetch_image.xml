@@ -20,7 +20,7 @@
         app:layout_constraintRight_toLeftOf="@id/fetchBtn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintWidth_percent="0.75"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/urlTextbox"
         app:layout_constraintBottom_toTopOf="@+id/img4"
-        app:layout_constraintWidth_percent="0.2" />
+        app:layout_constraintWidth_percent="0.25" />
 
     <ImageView
         android:id="@+id/img1"
