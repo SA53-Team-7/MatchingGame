@@ -51,10 +51,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 				isBusy = false;
 			}
 		}, 1500);
-
-		//test stuff
-		Button button = findViewById(R.id.testSkip);
-		button.setOnClickListener(this);
     }
 
     protected void retrieveImages(){
@@ -156,21 +152,16 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
     	//block inputs if isBusy flag is true
 		if (!isBusy) {
 			int id = view.getId();
-			if (id == R.id.testSkip) {
-				addScore();
-			}
-			else{
-				//block input if the grid status is 2 (locked)
-				if (gridStatus[getGridNumber(view)] != 2) {
-					if (previousGrid != null) {
-						//block clicking the already selected grid
-						if (id != previousGrid.getId()){
-							matchImage(view);
-						}
-					}
-					else {
+			//block input if the grid status is 2 (locked)
+			if (gridStatus[getGridNumber(view)] != 2) {
+				if (previousGrid != null) {
+					//block clicking the already selected grid
+					if (id != previousGrid.getId()){
 						matchImage(view);
 					}
+				}
+				else {
+					matchImage(view);
 				}
 			}
 		}

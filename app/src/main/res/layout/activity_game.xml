@@ -183,15 +183,5 @@
         app:layout_constraintLeft_toRightOf="@id/img11"
         app:srcCompat="@drawable/question_mark" />
 
-    <Button
-        android:id="@+id/testSkip"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Test Skip"
-        app:layout_constraintTop_toBottomOf="@id/img11"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
