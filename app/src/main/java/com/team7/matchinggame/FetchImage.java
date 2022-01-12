@@ -67,7 +67,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     }
 
                     Thread t1 = new Thread(() -> {
-                        Log.e("hello", "here");
                         imgURLList = FetchImageHelper.getImageURLList(webURL);
                     });
                     t1.start();
@@ -78,7 +77,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     }
 
                     count = 1;
-//                    checkImageNum();
+                    checkImageNum();
 
                     displayImg();
                 }
@@ -86,11 +85,30 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    protected void displayProgress(){
+        // progress bar and text view
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        TextView progressDesc = findViewById(R.id.progressDesc);
+
+        progressBar.setMax(imgURLList.size());
+        progressBar.setProgress(count);
+        progressDesc.setText("Downloading " + String.valueOf(count) + " of " + String.valueOf(imgURLList.size()) + " images...");
+        count++;
+
+        // downloading finished, toast text
+        if (count == (imgURLList.size()+1)){
+            // set up onclick listeners for image selection
+            setupImageSelection();
+            progressDesc.setText("Please select 6 images...");
+            Toast finishDL = Toast.makeText(context, "Downloading finished!", Toast.LENGTH_LONG);
+            finishDL.show();
+        }
+    }
 
     protected void checkImageNum() {
-        if (imgURLList.size() < 20 || imgURLList == null) {
+        if (imgURLList.size() < 6 || imgURLList == null) {
             String title = "Notice";
-            String msg = "Sorry, not enough images in the URL";
+            String msg = "Sorry, not enough images in the URL. \nPlease enter another URL.";
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle(title)
@@ -100,10 +118,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
-                                    Log.e("come out", "yes, come");
                                 }
                             });
-//            AlertDialog alertDialog = builder.create();
             builder.create().show();
         }
     }
@@ -123,9 +139,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
-                                Log.e("count value", String.valueOf(count));
-                                Log.e("num value", String.valueOf(num));
                                 int resId = 0;
                                 try {
                                     resId = R.id.class.getField("img" + String.valueOf(count)).getInt(null);
@@ -142,24 +155,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                 ImageView imageView = findViewById(resId);
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
-
-                                // progress bar and text view
-                                ProgressBar progressBar = findViewById(R.id.progressBar);
-                                TextView progressDesc = findViewById(R.id.progressDesc);
-
-                                progressBar.setMax(imgURLList.size());
-                                progressBar.setProgress(count);
-                                progressDesc.setText("Downloading " + String.valueOf(count) + " of " + String.valueOf(imgURLList.size()) + " images...");
-                                count++;
-
-                                // downloading finished, toast text
-                                if (count == (imgURLList.size()+1)){
-                                    // set up onclick listeners for image selection
-                                    setupImageSelection();
-                                    progressDesc.setText("Please select 6 images...");
-                                    Toast finishDL = Toast.makeText(context, "Downloading finished!", Toast.LENGTH_LONG);
-                                    finishDL.show();
-                                }
                             }
                         });
                     }

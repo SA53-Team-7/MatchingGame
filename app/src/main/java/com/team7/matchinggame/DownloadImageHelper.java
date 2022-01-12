@@ -13,7 +13,6 @@ import java.util.UUID;
 
 public class DownloadImageHelper {
 
-    // main method in this class
     private final Context context;
 
     public DownloadImageHelper(Context context){

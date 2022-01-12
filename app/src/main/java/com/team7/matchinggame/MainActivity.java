@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //create splash screen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -25,6 +26,19 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         },SPLASH_SCREEN);
+
+        //initialize background music
+        Intent intentMusic = new Intent(MainActivity.this, MusicService.class);
+        intentMusic.putExtra("class","main");
+        startService(intentMusic);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent intentMusic = new Intent(MainActivity.this, MusicService.class);
+        intentMusic.putExtra("class","main");
+        startService(intentMusic);
     }
 }
 
