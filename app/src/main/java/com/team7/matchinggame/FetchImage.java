@@ -80,6 +80,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     checkImageNum();
 
                     displayImg();
+
                 }
             });
         }
@@ -155,6 +156,8 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                 ImageView imageView = findViewById(resId);
                                 Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
                                 imageView.setImageBitmap(bitmap);
+
+                                displayProgress();
                             }
                         });
                     }
