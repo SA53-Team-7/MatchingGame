@@ -34,6 +34,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
     private int count;
     private TextView progressDesc;
     private Thread bgThread;
+    private boolean interrupted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +62,12 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                     // removes old grid selections from previous selection
                     resetGrids();
 
+                    for(ImageView imgview: ImageViewList) {
+                        imgview.setImageDrawable(null);
+                    }
+
                     if (bgThread != null) {
-                        bgThread.interrupt();
+                        interrupted = true;
                     }
 
                     EditText newURL = findViewById(R.id.urlTextbox);
@@ -84,6 +89,7 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
 
                     count = 1;
                     checkImageNum();
+                    interrupted = false;
                     displayImg();
                 }
             });
@@ -135,41 +141,50 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
             @Override
             public void run() {
                 for(int i = 1; i <= imgURLList.size(); i++){
-                    Log.e("i", String.valueOf(i));
-                    final int num = i;
+                    if (!interrupted){
+                        Log.e("i", String.valueOf(i));
+                        final int num = i;
 
-                DownloadImageHelper dhelper = new DownloadImageHelper(context);
-                File f = dhelper.downloadImgByURL(imgURLList.get(num - 1));
-                if (f != null) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int resId = 0;
-                            try {
-                                resId = R.id.class.getField("img" + String.valueOf(num)).getInt(null);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (NoSuchFieldException e) {
-                                e.printStackTrace();
-                            }
+                        DownloadImageHelper dhelper = new DownloadImageHelper(context);
+                        File f = dhelper.downloadImgByURL(imgURLList.get(num - 1));
+                        if (f != null) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int resId = 0;
+                                    try {
+                                        resId = R.id.class.getField("img" + String.valueOf(num)).getInt(null);
+                                    } catch (IllegalAccessException e) {
+                                        e.printStackTrace();
+                                    } catch (NoSuchFieldException e) {
+                                        e.printStackTrace();
+                                    }
 
-                            // Store ImageView ID and associated image with it
-                            FileNameLists.put(resId, f.getName());
+                                    // Store ImageView ID and associated image with it
+                                    FileNameLists.put(resId, f.getName());
 
-                            // load all images
-                            ImageView imageView = findViewById(resId);
-                            Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
-                            imageView.setImageBitmap(bitmap);
+                                    // load all images
+                                    ImageView imageView = findViewById(resId);
+                                    Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
+                                    imageView.setImageBitmap(bitmap);
 
-                            displayProgress(num);
+                                    displayProgress(num);
 
-                            if (Thread.interrupted()) {
-                                return;
-                            }
+                                    if (Thread.interrupted()) {
+                                        return;
+                                    }
+                                }
+                            });
                         }
-                    });
+                    }
+                    else {
+                        for(ImageView view: ImageViewList) {
+                            view.setImageDrawable(null);
+                        }
+                        cleanUpImages(2);
+                        break;
+                    }
                 }
-            }
             }
         });
         bgThread.start();
