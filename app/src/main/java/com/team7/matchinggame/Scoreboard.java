@@ -52,8 +52,6 @@ public class Scoreboard extends AppCompatActivity implements View.OnClickListene
         int id = view.getId();
 
         if (id == R.id.btnHome) {
-//            Intent intent = new Intent(this, HomeActivity.class);
-//            startActivity(intent);
             finish();
         }
     }
