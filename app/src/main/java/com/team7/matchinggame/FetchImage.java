@@ -55,15 +55,15 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onClick(View view) {
 
-                    if (bgThread != null) {
-                        bgThread.interrupt();
-                    }
-
                     // removes old images from previous fetch
                     cleanUpImages(2);
 
                     // removes old grid selections from previous selection
                     resetGrids();
+
+                    if (bgThread != null) {
+                        bgThread.interrupt();
+                    }
 
                     EditText newURL = findViewById(R.id.urlTextbox);
                     if (newURL != null) {
