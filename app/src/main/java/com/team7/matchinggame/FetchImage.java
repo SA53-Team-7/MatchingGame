@@ -1,6 +1,5 @@
 package com.team7.matchinggame;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +26,7 @@ import java.util.HashMap;
 public class FetchImage extends AppCompatActivity implements View.OnClickListener {
     private ArrayList<ImageView> ImageViewList = new ArrayList<>(); // contains all imageviews
     private HashMap<Integer, String> FileNameLists = new HashMap<>(); // contains imageview IDs and respective file name
-    private ArrayList<String> selectedImages = new ArrayList(); // contains imageview IDs of selected cards
+    private ArrayList<String> selectedImages = new ArrayList<String>(); // contains imageview IDs of selected cards
     private Context context;
     private String webURL;
     private ArrayList<String> imgURLList = new ArrayList<String>();
@@ -168,10 +167,6 @@ public class FetchImage extends AppCompatActivity implements View.OnClickListene
                                     imageView.setImageBitmap(bitmap);
 
                                     displayProgress(num);
-
-                                    if (Thread.interrupted()) {
-                                        return;
-                                    }
                                 }
                             });
                         }

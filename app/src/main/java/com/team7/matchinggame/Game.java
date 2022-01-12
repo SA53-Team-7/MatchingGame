@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -114,36 +113,33 @@ public class Game extends AppCompatActivity implements View.OnClickListener{
 			toggleImage(grid, view);
 			return;
 		}
-		//if there is a previous selection for match
-		if (selected1 != null) {
-			//if the 2 selections match
-			if (selected1.equals(assignedImages[grid])){
-				selected1 = null;
-				addScore();
-				toggleImage(grid, view);
-				gridStatus[grid] = 2;
-				gridStatus[getGridNumber(previousGrid)] = 2;
-				previousGrid.setAlpha(0.3f);
-				view.setAlpha(0.3f);
-				MediaPlayer matched = MediaPlayer.create(Game.this, R.raw.match);
-				matched.start();
-			}
-			//if selections don't match
-			else {
-				isBusy = true;
-				toggleImage(grid, view);
-				Handler handler = new Handler();
-				handler.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						toggleImage(getGridNumber(previousGrid), previousGrid);
-						toggleImage(grid, view);
-						previousGrid = null;
-						selected1 = null;
-						isBusy = false;
-					}
-				}, 500);
-			}
+		//if the 2 selections match
+		if (selected1.equals(assignedImages[grid])){
+			selected1 = null;
+			addScore();
+			toggleImage(grid, view);
+			gridStatus[grid] = 2;
+			gridStatus[getGridNumber(previousGrid)] = 2;
+			previousGrid.setAlpha(0.3f);
+			view.setAlpha(0.3f);
+			MediaPlayer matched = MediaPlayer.create(Game.this, R.raw.match);
+			matched.start();
+		}
+		//if selections don't match
+		else {
+			isBusy = true;
+			toggleImage(grid, view);
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					toggleImage(getGridNumber(previousGrid), previousGrid);
+					toggleImage(grid, view);
+					previousGrid = null;
+					selected1 = null;
+					isBusy = false;
+				}
+			}, 500);
 		}
 	}
 

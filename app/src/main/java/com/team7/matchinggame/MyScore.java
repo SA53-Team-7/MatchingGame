@@ -210,5 +210,4 @@ public class MyScore extends AppCompatActivity implements View.OnClickListener {
 
 
     }
-
 }
